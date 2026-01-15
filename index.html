@@ -53,7 +53,7 @@
         import { getAuth, signInAnonymously, onAuthStateChanged, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, doc, addDoc, setDoc, updateDoc, deleteDoc, onSnapshot, query, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Nueva Configuración de Firebase solicitada
+        // Configuración de Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyAnrHBpTZTZnnzzdqMWiaKo-UQGhScxE2Y",
             authDomain: "ayp-camisetas-f1348.firebaseapp.com",
@@ -64,7 +64,6 @@
             measurementId: "G-PM6M1QV0NN"
         };
         
-        // Usar config del entorno si existe para asegurar compatibilidad en Canvas, sino usar la del usuario
         const configToUse = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : firebaseConfig;
         
         const app = initializeApp(configToUse);
@@ -123,10 +122,11 @@
 
         const ICON_MAP = { 'link': LinkIcon, 'whatsapp': Phone, 'instagram': Instagram, 'star': Star, 'heart': Heart, 'globe': Globe, 'truck': Truck, 'gift': Gift };
 
-        // --- DATA INICIAL CONSTANTES ---
+        // --- CONSTANTES ---
         const ADMIN_HASH = "MDYyNzA4";
         const INITIAL_MARQUEE = "⚽ ENVÍOS GRATIS A TODO EL PAÍS EN COMPRAS SUPERIORES A $150.000 ⚽  🔥 3 CUOTAS SIN INTERÉS 🔥";
         
+        // Categorías iniciales
         const INITIAL_CATEGORIES = [
             { id: 1, name: "Premier League", image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgkSAf6I2sP5AuBQq1YxsDh7Dg167gncu5PZwUvDVMXed1QQRyl9JQygpr_Jp5OJZdTrqUbjZWxUpu42nblIK1bFKpCf2t-XoyRJf4MMCVYRA24wAR6iQx78HOtwRSAazGguxHSZWJWmN0/s1600/PL.png" },
             { id: 2, name: "La Liga", image: "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEirXlLZ6JGoNTRW4xbsozgyfWK6Px4XVkQ-AOxSeoSOjvB6Uma4rYshen8djk6uIwkgD_KsHJl9d7WD6jCcPvLLPa6DtB25ok9qszZ6EoYPcYL_FiOOjsVQVWrKQsJTy9dT6XGFYOCj1Q412AVMNvXn40SCvw4Q_34Nhu33-XhhlH5P3GMMzle-fBSFg6A/s16000/LaLiga.png" },
@@ -142,20 +142,24 @@
             { id: 2, label: "Instagram", url: "https://www.instagram.com/ayp_importados/?hl=es", type: "instagram" }
         ];
 
-        // Stock initialized to 1 for all sizes
+        // Definiciones de Talles
+        const SIZES_ADULT = ["XS", "S", "M", "L", "XL", "XXL", "3XL"];
+        const SIZES_KIDS = ["8", "10", "12", "14"];
+
+        // Productos Iniciales (con target: 'adult' por defecto)
         const INITIAL_PRODUCTS = [
-            { id: 1, name: "Argentina 2025", sales: 120, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Campeón", league: "World Cup", team: "Argentina", type: "Actual", version: "Fan", category: "Selección", sizes: ["S", "M", "L", "XL", "XXL"], stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/bNNfKWrw/a-RGENTINA-2025.webp"], tags: ["2025", "Campeón", "Celeste", "Blanco"], description: "Camiseta oficial de la Selección Argentina para la temporada 2025. Tecnología de absorción de humedad AEROREADY.", colors: { primary: "#7dd3fc", secondary: "#ffffff" } },
-            { id: 2, name: "Alemania 2026", sales: 45, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "", league: "World Cup", team: "Alemania", type: "Actual", version: "Fan", category: "Selección", sizes: ["S", "M", "L", "XL"], stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/mZSGpBLh/Alemania-2026.webp"], tags: ["2026", "Blanco"], description: "Camiseta local de Alemania para el Mundial 2026. Diseño clásico en blanco y negro.", colors: { primary: "#ffffff", secondary: "#000000" } },
-            { id: 3, name: "Boca Retro 1998", sales: 85, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Retro", league: "Argentina LPF", team: "Boca Juniors", type: "Retro", version: "Normal", category: "Club", sizes: ["S", "M", "L", "XL"], stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/wxkd4gqJ/Boca-retro-1998.webp"], tags: ["Retro", "1998", "Azul", "Amarillo"], description: "Edición retro histórica de Boca Juniors 1998. Cuello polo y franja amarilla tradicional.", colors: { primary: "#1e3a8a", secondary: "#eab308" } },
-            { id: 4, name: "Boca Titular 2025", sales: 95, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Nuevo", league: "Argentina LPF", team: "Boca Juniors", type: "Actual", version: "Fan", category: "Club", sizes: ["S", "M", "L", "XL", "XXL"], stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/QNqrYh87/Boca-titular-2025.webp"], tags: ["2025", "Azul", "Oro"], description: "Camiseta titular de Boca Juniors temporada 2025.", colors: { primary: "#1d4ed8", secondary: "#eab308" } },
-            { id: 5, name: "Chelsea 2026", sales: 30, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Player Version", league: "Premier League", team: "Chelsea", type: "Actual", version: "Player", category: "Club", sizes: ["S", "M", "L", "XL"], stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/nccf6grX/CHELSEA-2026.avif"], tags: ["2026", "Blues", "Azul"], description: "Camiseta Chelsea 2026 versión jugador. Corte ajustado y tecnología de ventilación avanzada.", colors: { primary: "#2563eb", secondary: "#1e40af" } },
-            { id: 6, name: "Liverpool Suplente", sales: 25, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Suplente", league: "Premier League", team: "Liverpool", type: "Actual", version: "Fan", category: "Club", sizes: ["S", "M", "L", "XL"], stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/L66Frw5q/LIVERPOOL-SUPLENTE.webp"], tags: ["Suplente", "Verde"], description: "Segunda equipación del Liverpool. Diseño moderno y urbano.", colors: { primary: "#16a34a", secondary: "#ffffff" } },
-            { id: 7, name: "Milan Titular", sales: 55, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Clásico", league: "Serie A", team: "Milan", type: "Actual", version: "Fan", category: "Club", sizes: ["S", "M", "L", "XL"], stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/L66Frw5Y/MILAN-TITULAR.webp"], tags: ["Rojo", "Negro"], description: "Camiseta clásica a rayas rojas y negras del AC Milan.", colors: { primary: "#dc2626", secondary: "#000000" } },
-            { id: 8, name: "Real Madrid Tercera", sales: 70, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Tercera", league: "La Liga", team: "Real Madrid", type: "Actual", version: "Fan", category: "Club", sizes: ["S", "M", "L", "XL"], stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/kXXPkzGt/Real-Madrid-tercera.webp"], tags: ["Tercera", "Gris"], description: "Tercera equipación del Real Madrid. Elegancia y estilo.", colors: { primary: "#1f2937", secondary: "#eab308" } },
-            { id: 9, name: "River 2025", sales: 90, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Nuevo", league: "Argentina LPF", team: "River Plate", type: "Actual", version: "Fan", category: "Club", sizes: ["S", "M", "L", "XL"], stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/CLLpWX58/River-2025.jpg"], tags: ["2025", "Blanco", "Rojo"], description: "Camiseta titular de River Plate 2025. La banda roja tradicional.", colors: { primary: "#ffffff", secondary: "#dc2626" } },
-            { id: 10, name: "Corinthians Suplente", sales: 15, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Suplente", league: "Brasileirao", team: "Corinthians", type: "Actual", version: "Fan", category: "Club", sizes: ["S", "M", "L", "XL"], stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/GhhnZVtG/SUPLENTE-CORINTHIANS.webp"], tags: ["Suplente", "Negro"], description: "Camiseta negra alternativa del Timao.", colors: { primary: "#000000", secondary: "#ffffff" } },
-            { id: 11, name: "PSG Suplente", sales: 40, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Suplente", league: "Ligue 1", team: "PSG", type: "Actual", version: "Fan", category: "Club", sizes: ["S", "M", "L", "XL"], stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/3JJQPVNp/SUPLENTE-PSG.jpg"], tags: ["Suplente", "Azul"], description: "Camiseta suplente del Paris Saint-Germain.", colors: { primary: "#1e3a8a", secondary: "#dc2626" } },
-            { id: 12, name: "Barcelona Tercera", sales: 65, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Tercera", league: "La Liga", team: "Barcelona", type: "Actual", version: "Fan", category: "Club", sizes: ["S", "M", "L", "XL"], stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/RVVxjyhR/TERCERA-BARCELONA.webp"], tags: ["Tercera", "Verde"], description: "Tercera camiseta del FC Barcelona. Diseño vibrante.", colors: { primary: "#14b8a6", secondary: "#1e3a8a" } }
+            { id: 1, name: "Argentina 2025", sales: 120, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Campeón", league: "World Cup", team: "Argentina", type: "Actual", version: "Fan", category: "Selección", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/bNNfKWrw/a-RGENTINA-2025.webp"], tags: ["2025", "Campeón", "Celeste", "Blanco"], description: "Camiseta oficial de la Selección Argentina para la temporada 2025. Tecnología de absorción de humedad AEROREADY.", colors: { primary: "#7dd3fc", secondary: "#ffffff" } },
+            { id: 2, name: "Alemania 2026", sales: 45, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "", league: "World Cup", team: "Alemania", type: "Actual", version: "Fan", category: "Selección", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/mZSGpBLh/Alemania-2026.webp"], tags: ["2026", "Blanco"], description: "Camiseta local de Alemania para el Mundial 2026. Diseño clásico en blanco y negro.", colors: { primary: "#ffffff", secondary: "#000000" } },
+            { id: 3, name: "Boca Retro 1998", sales: 85, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Retro", league: "Argentina LPF", team: "Boca Juniors", type: "Retro", version: "Normal", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/wxkd4gqJ/Boca-retro-1998.webp"], tags: ["Retro", "1998", "Azul", "Amarillo"], description: "Edición retro histórica de Boca Juniors 1998. Cuello polo y franja amarilla tradicional.", colors: { primary: "#1e3a8a", secondary: "#eab308" } },
+            { id: 4, name: "Boca Titular 2025", sales: 95, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Nuevo", league: "Argentina LPF", team: "Boca Juniors", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/QNqrYh87/Boca-titular-2025.webp"], tags: ["2025", "Azul", "Oro"], description: "Camiseta titular de Boca Juniors temporada 2025.", colors: { primary: "#1d4ed8", secondary: "#eab308" } },
+            { id: 5, name: "Chelsea 2026", sales: 30, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Player Version", league: "Premier League", team: "Chelsea", type: "Actual", version: "Player", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/nccf6grX/CHELSEA-2026.avif"], tags: ["2026", "Blues", "Azul"], description: "Camiseta Chelsea 2026 versión jugador. Corte ajustado y tecnología de ventilación avanzada.", colors: { primary: "#2563eb", secondary: "#1e40af" } },
+            { id: 6, name: "Liverpool Suplente", sales: 25, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Suplente", league: "Premier League", team: "Liverpool", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/L66Frw5q/LIVERPOOL-SUPLENTE.webp"], tags: ["Suplente", "Verde"], description: "Segunda equipación del Liverpool. Diseño moderno y urbano.", colors: { primary: "#16a34a", secondary: "#ffffff" } },
+            { id: 7, name: "Milan Titular", sales: 55, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Clásico", league: "Serie A", team: "Milan", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/L66Frw5Y/MILAN-TITULAR.webp"], tags: ["Rojo", "Negro"], description: "Camiseta clásica a rayas rojas y negras del AC Milan.", colors: { primary: "#dc2626", secondary: "#000000" } },
+            { id: 8, name: "Real Madrid Tercera", sales: 70, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Tercera", league: "La Liga", team: "Real Madrid", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/kXXPkzGt/Real-Madrid-tercera.webp"], tags: ["Tercera", "Gris"], description: "Tercera equipación del Real Madrid. Elegancia y estilo.", colors: { primary: "#1f2937", secondary: "#eab308" } },
+            { id: 9, name: "River 2025", sales: 90, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Nuevo", league: "Argentina LPF", team: "River Plate", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/CLLpWX58/River-2025.jpg"], tags: ["2025", "Blanco", "Rojo"], description: "Camiseta titular de River Plate 2025. La banda roja tradicional.", colors: { primary: "#ffffff", secondary: "#dc2626" } },
+            { id: 10, name: "Corinthians Suplente", sales: 15, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Suplente", league: "Brasileirao", team: "Corinthians", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/GhhnZVtG/SUPLENTE-CORINTHIANS.webp"], tags: ["Suplente", "Negro"], description: "Camiseta negra alternativa del Timao.", colors: { primary: "#000000", secondary: "#ffffff" } },
+            { id: 11, name: "PSG Suplente", sales: 40, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Suplente", league: "Ligue 1", team: "PSG", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/3JJQPVNp/SUPLENTE-PSG.jpg"], tags: ["Suplente", "Azul"], description: "Camiseta suplente del Paris Saint-Germain.", colors: { primary: "#1e3a8a", secondary: "#dc2626" } },
+            { id: 12, name: "Barcelona Tercera", sales: 65, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Tercera", league: "La Liga", team: "Barcelona", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/RVVxjyhR/TERCERA-BARCELONA.webp"], tags: ["Tercera", "Verde"], description: "Tercera camiseta del FC Barcelona. Diseño vibrante.", colors: { primary: "#14b8a6", secondary: "#1e3a8a" } }
         ];
 
         // --- COMPONENTES AUXILIARES ---
@@ -175,6 +179,7 @@
             );
         };
 
+        // ... (BuyerForm, TicketView, LoginModal, Sidebar, OnlineUsers sin cambios mayores, solo Sidebar referenciado) ...
         const BuyerForm = ({ onSubmit, onClose }) => {
             const [formData, setFormData] = useState({ name: "", email: "", whatsapp: "", country: "", province: "" });
             const handleSubmit = (e) => {
@@ -299,42 +304,102 @@
             </>
         );
 
-        // --- FUNCIONES DE SERVICIO DE BASE DE DATOS (Centralizadas) ---
+        const OnlineUsers = ({ user }) => {
+            const [count, setCount] = useState(1);
+
+            useEffect(() => {
+                if (!user) return;
+                const { db, APP_ID, collection, doc, setDoc, deleteDoc, onSnapshot } = window.firebase;
+                
+                const presenceRef = collection(db, 'artifacts', APP_ID, 'public', 'data', 'presence');
+                const myDoc = doc(presenceRef, user.uid);
+
+                const beat = () => {
+                    setDoc(myDoc, { last_seen: Date.now() }).catch(err => console.warn("Presence err:", err));
+                };
+
+                beat();
+                const intervalId = setInterval(beat, 5000);
+
+                const unsub = onSnapshot(presenceRef, (snapshot) => {
+                    const now = Date.now();
+                    const active = snapshot.docs.filter(d => {
+                        const data = d.data();
+                        return data.last_seen && (now - data.last_seen < 15000);
+                    }).length;
+                    setCount(Math.max(1, active));
+                });
+
+                return () => {
+                    clearInterval(intervalId);
+                    unsub();
+                    deleteDoc(myDoc).catch(()=>{});
+                };
+            }, [user]);
+
+            return (
+                <div className="hidden md:flex items-center gap-2 bg-slate-800/80 px-3 py-1.5 rounded-full border border-green-500/30">
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                    </span>
+                    <span className="text-xs font-bold text-green-400">{count} en línea</span>
+                </div>
+            );
+        };
+
+        // --- SERVICIO DE BD ROBUSTO ---
+        // Este servicio garantiza que los cambios se reflejen al instante localmente
+        // y trata de persistir en Firebase si es posible.
         const DBService = {
             async add(collectionName, data, fallbackStateSetter, currentState) {
+                // 1. Optimistic Update (Actualizar localmente YA)
+                const newItem = { id: Date.now(), ...data }; 
+                const newState = [...currentState, newItem];
+                fallbackStateSetter(newState);
+                localStorage.setItem(`ayp_${collectionName}_v9`, JSON.stringify(newState));
+
                 try {
                     const { db, APP_ID, collection, addDoc } = window.firebase;
                     const ref = collection(db, 'artifacts', APP_ID, 'public', 'data', collectionName);
                     await addDoc(ref, data);
+                    console.log(`[DB] Guardado exitoso en ${collectionName}`);
                     return true;
                 } catch (e) {
-                    console.warn(`Firebase write failed for ${collectionName}, falling back to local.`, e);
-                    const newItem = { id: Date.now(), ...data }; 
-                    const newState = [...currentState, newItem];
-                    fallbackStateSetter(newState);
-                    localStorage.setItem(`ayp_${collectionName}_v9`, JSON.stringify(newState));
+                    console.warn(`[DB] Fallo guardado remoto en ${collectionName}. Usando local.`, e);
                     return true; 
                 }
             },
             async update(collectionName, id, data, fallbackStateSetter, currentState) {
+                // 1. Optimistic Update
+                const newState = currentState.map(item => item.id === id ? { ...item, ...data } : item);
+                fallbackStateSetter(newState);
+                localStorage.setItem(`ayp_${collectionName}_v9`, JSON.stringify(newState));
+
                 try {
                     const { db, APP_ID, doc, updateDoc } = window.firebase;
+                    // Solo intentar update remoto si es un ID de string (Firebase ID)
+                    // Si es numérico, es un producto creado localmente y no existe en la nube aún
                     if (typeof id === 'string') {
                         const ref = doc(db, 'artifacts', APP_ID, 'public', 'data', collectionName, id);
                         await updateDoc(ref, data);
+                        console.log(`[DB] Actualización exitosa en ${collectionName}`);
                         return true;
                     } else {
-                        throw new Error("Local ID");
+                        console.log("[DB] ID local, solo actualizando localmente.");
+                        return true;
                     }
                 } catch (e) {
-                     console.warn(`Firebase update failed for ${collectionName}, falling back to local.`, e);
-                     const newState = currentState.map(item => item.id === id ? { ...item, ...data } : item);
-                     fallbackStateSetter(newState);
-                     localStorage.setItem(`ayp_${collectionName}_v9`, JSON.stringify(newState));
+                     console.warn(`[DB] Fallo actualización remota en ${collectionName}. Usando local.`, e);
                      return true;
                 }
             },
             async delete(collectionName, id, fallbackStateSetter, currentState) {
+                // 1. Optimistic Update
+                const newState = currentState.filter(item => item.id !== id);
+                fallbackStateSetter(newState);
+                localStorage.setItem(`ayp_${collectionName}_v9`, JSON.stringify(newState));
+
                 try {
                     const { db, APP_ID, doc, deleteDoc } = window.firebase;
                      if (typeof id === 'string') {
@@ -342,13 +407,10 @@
                         await deleteDoc(ref);
                         return true;
                      } else {
-                         throw new Error("Local ID");
+                         return true;
                      }
                 } catch (e) {
-                    console.warn(`Firebase delete failed for ${collectionName}, falling back to local.`, e);
-                    const newState = currentState.filter(item => item.id !== id);
-                    fallbackStateSetter(newState);
-                    localStorage.setItem(`ayp_${collectionName}_v9`, JSON.stringify(newState));
+                    console.warn(`[DB] Fallo borrado remoto en ${collectionName}. Usando local.`, e);
                     return true;
                 }
             }
@@ -357,28 +419,50 @@
         const AdminPanel = ({ products, setProducts, categories, setCategories, pendingOrders, onDeductStock, contacts, setContacts, coupons, setCoupons, marqueeText, setMarqueeText, showMarquee, setShowMarquee, onClose }) => {
             const [activeTab, setActiveTab] = useState('list');
             const [editProduct, setEditProduct] = useState(null);
-            const [formData, setFormData] = useState({ name: "", originalPrice: "45000", discountPercent: 0, specialDiscountLabel: "", league: "", team: "", type: "Actual", version: "Fan", category: "Club", images: "", tags: "", description: "", stockXS:0, stockS: 0, stockM: 0, stockL: 0, stockXL: 0, stockXXL: 0, stock3XL: 0, colorPrimary: "#000000", colorSecondary: "#ffffff" });
+            
+            // Estado inicial del formulario adaptado para Kids/Adults
+            const initialForm = { name: "", originalPrice: "45000", discountPercent: 0, specialDiscountLabel: "", league: "", team: "", type: "Actual", version: "Fan", category: "Club", target: "adult", images: "", tags: "", description: "", colorPrimary: "#000000", colorSecondary: "#ffffff" };
+            // Generar campos de stock dinámicamente para el reset
+            SIZES_ADULT.forEach(s => initialForm[`stock${s}`] = 0);
+            SIZES_KIDS.forEach(s => initialForm[`stock${s}`] = 0);
+
+            const [formData, setFormData] = useState(initialForm);
             const [newContact, setNewContact] = useState({ label: "", url: "", type: "link" });
 
+            // Cargar datos al editar
             const loadProductToEdit = (p) => {
                 setEditProduct(p);
-                setFormData({
+                const newData = {
                     name: p.name, 
                     originalPrice: p.originalPrice || 45000, 
                     discountPercent: p.discountPercent || 0,
                     specialDiscountLabel: p.specialDiscountLabel || "",
                     league: p.league, team: p.team, type: p.type, version: p.version || "Fan", category: p.category,
+                    target: p.target || "adult",
                     images: p.images.join(', '), tags: p.tags.join(', '), description: p.description || "",
-                    stockXS: p.stock['XS']||0, stockS: p.stock['S']||0, stockM: p.stock['M']||0, stockL: p.stock['L']||0, stockXL: p.stock['XL']||0, stockXXL: p.stock['XXL']||0, stock3XL: p.stock['3XL']||0,
                     colorPrimary: p.colors?.primary || "#000000",
                     colorSecondary: p.colors?.secondary || "#ffffff"
-                });
+                };
+                
+                // Cargar Stocks
+                SIZES_ADULT.forEach(s => newData[`stock${s}`] = p.stock ? (p.stock[s] || 0) : 0);
+                SIZES_KIDS.forEach(s => newData[`stock${s}`] = p.stock ? (p.stock[s] || 0) : 0);
+
+                setFormData(newData);
                 setActiveTab('add');
             };
 
             const handleSubmitProduct = async (e) => {
                 e.preventDefault();
-                const stockObj = { "XS": parseInt(formData.stockXS), "S": parseInt(formData.stockS), "M": parseInt(formData.stockM), "L": parseInt(formData.stockL), "XL": parseInt(formData.stockXL), "XXL": parseInt(formData.stockXXL), "3XL": parseInt(formData.stock3XL) };
+                
+                // Construir objeto de stock basado en el target
+                const stockObj = {};
+                const sizesToUse = formData.target === 'kid' ? SIZES_KIDS : SIZES_ADULT;
+                
+                sizesToUse.forEach(s => {
+                    stockObj[s] = parseInt(formData[`stock${s}`]) || 0;
+                });
+
                 const tagsArr = formData.tags.split(',').map(t=>t.trim()).filter(t=>t);
                 let imagesArr = formData.images.split(',').map(t=>t.trim()).filter(t=>t);
                 
@@ -399,15 +483,19 @@
                     sales: editProduct ? (editProduct.sales || 0) : 0
                 };
                 
+                // Limpiar campos temporales del formulario que no van a la BD
+                SIZES_ADULT.forEach(s => delete productData[`stock${s}`]);
+                SIZES_KIDS.forEach(s => delete productData[`stock${s}`]);
+
                 if (editProduct) {
                     await DBService.update('products', editProduct.id, productData, setProducts, products);
-                    alert("Producto Actualizado");
+                    alert("Producto Actualizado Correctamente");
                     setEditProduct(null);
                 } else {
                     await DBService.add('products', productData, setProducts, products);
-                    alert("Producto Creado");
+                    alert("Producto Creado Correctamente");
                 }
-                setFormData({ name: "", originalPrice: "45000", discountPercent: 0, specialDiscountLabel: "", league: "", team: "", type: "Actual", version: "Fan", category: "Club", images: "", tags: "", description: "", stockXS:0, stockS: 0, stockM: 0, stockL: 0, stockXL: 0, stockXXL: 0, stock3XL: 0, colorPrimary: "#000000", colorSecondary: "#ffffff" });
+                setFormData(initialForm); // Reset
                 setActiveTab('list');
             };
 
@@ -427,11 +515,13 @@
             };
 
             const downloadXLS = () => {
-                const tableBody = products.map(p => `<tr><td>${p.id}</td><td>${p.name}</td><td>${p.price}</td><td>${p.stock['S']}</td><td>${p.stock['M']}</td><td>${p.stock['L']}</td></tr>`).join('');
-                const table = `<html xmlns:x="urn:schemas-microsoft-com:office:excel"><body><table><thead><tr><th>ID</th><th>Nombre</th><th>Precio</th><th>Stock S</th><th>Stock M</th><th>Stock L</th></tr></thead><tbody>${tableBody}</tbody></table></body></html>`;
+                const tableBody = products.map(p => `<tr><td>${p.id}</td><td>${p.name}</td><td>${p.price}</td><td>${p.target}</td></tr>`).join('');
+                const table = `<html xmlns:x="urn:schemas-microsoft-com:office:excel"><body><table><thead><tr><th>ID</th><th>Nombre</th><th>Precio</th><th>Tipo</th></tr></thead><tbody>${tableBody}</tbody></table></body></html>`;
                 const blob = new Blob([table], { type: 'application/vnd.ms-excel' });
                 const link = document.createElement("a"); link.href = URL.createObjectURL(blob); link.download = "stock.xls"; link.click();
             };
+
+            const currentSizes = formData.target === 'kid' ? SIZES_KIDS : SIZES_ADULT;
 
             return (
                 <div className="fixed inset-0 z-50 bg-slate-900 overflow-y-auto">
@@ -450,7 +540,7 @@
                                 <div className="flex justify-end mb-4"><button onClick={downloadXLS} className="flex items-center gap-2 text-green-400 hover:text-green-300"><Download size={18}/> Descargar XLS</button></div>
                                 <div className="overflow-x-auto">
                                     <table className="w-full text-left text-sm text-slate-300">
-                                        <thead className="text-xs uppercase bg-white/5 text-slate-400"><tr><th className="p-3">Producto</th><th className="p-3">Precio</th><th className="p-3">Stock Total</th><th className="p-3">Acciones</th></tr></thead>
+                                        <thead className="text-xs uppercase bg-white/5 text-slate-400"><tr><th className="p-3">Producto</th><th className="p-3">Tipo</th><th className="p-3">Precio</th><th className="p-3">Stock Total</th><th className="p-3">Acciones</th></tr></thead>
                                         <tbody className="divide-y divide-white/5">
                                             {products.map(p => (
                                                 <tr key={p.id} className="hover:bg-white/5">
@@ -460,6 +550,7 @@
                                                             <div className="text-xs text-slate-500">{p.version}</div>
                                                         </div>
                                                     </td>
+                                                    <td className="p-3"><Badge color={p.target==='kid'?'pink':'blue'}>{p.target==='kid'?'Niños':'Adultos'}</Badge></td>
                                                     <td className="p-3">${p.price.toLocaleString()}</td>
                                                     <td className="p-3">{p.stock ? Object.values(p.stock).reduce((a,b)=>a+b,0) : 0} u.</td>
                                                     <td className="p-3 flex gap-2">
@@ -493,6 +584,22 @@
                                 <div className="bg-white/5 p-3 rounded text-sm text-slate-300">
                                     Precio Final Calculado: <span className="font-bold text-green-400">${(formData.originalPrice * (1 - formData.discountPercent/100)).toLocaleString()}</span>
                                 </div>
+                                
+                                {/* SELECTOR TIPO DE TALLE */}
+                                <div>
+                                    <label className="text-xs text-slate-400 mb-2 block font-bold uppercase">Tipo de Producto (Define Talles)</label>
+                                    <div className="flex gap-4">
+                                        <label className="flex items-center gap-2 cursor-pointer bg-slate-900 px-4 py-2 rounded border border-white/10 has-[:checked]:border-cyan-500 has-[:checked]:bg-cyan-500/10">
+                                            <input type="radio" name="target" value="adult" checked={formData.target !== 'kid'} onChange={() => setFormData({...formData, target: 'adult'})} className="hidden" />
+                                            <span className="text-white text-sm font-bold">Adultos (XS - 3XL)</span>
+                                        </label>
+                                        <label className="flex items-center gap-2 cursor-pointer bg-slate-900 px-4 py-2 rounded border border-white/10 has-[:checked]:border-pink-500 has-[:checked]:bg-pink-500/10">
+                                            <input type="radio" name="target" value="kid" checked={formData.target === 'kid'} onChange={() => setFormData({...formData, target: 'kid'})} className="hidden" />
+                                            <span className="text-white text-sm font-bold">Niños (8 - 14)</span>
+                                        </label>
+                                    </div>
+                                </div>
+
                                 <div className="grid grid-cols-2 gap-4">
                                     <div>
                                         <label className="text-xs text-slate-400 mb-1 block">Color Principal (Fondo)</label>
@@ -530,14 +637,24 @@
                                 </div>
                                 <textarea placeholder="Descripción del producto..." className="bg-slate-900 border border-white/10 rounded p-3 text-white w-full h-24" value={formData.description} onChange={e=>setFormData({...formData, description: e.target.value})}></textarea>
                                 <textarea required placeholder="URLs Imágenes (Separadas por coma)" className="bg-slate-900 border border-white/10 rounded p-3 text-white w-full h-24" value={formData.images} onChange={e=>setFormData({...formData, images: e.target.value})}></textarea>
-                                <div>
-                                    <label className="text-xs text-slate-400 mb-2 block">Stock por Talle</label>
-                                    <div className="grid grid-cols-7 gap-2">
-                                        {["XS","S","M","L","XL","XXL","3XL"].map(s => (
-                                            <div key={s} className="text-center"><span className="text-[10px] block text-slate-500">{s}</span><input type="number" className="w-full bg-slate-900 border border-white/10 rounded p-1 text-center text-white" value={formData[`stock${s}`]} onChange={e=>setFormData({...formData, [`stock${s}`]: e.target.value})} /></div>
+                                
+                                {/* STOCK GRID DINÁMICO */}
+                                <div className="bg-slate-900/50 p-4 rounded-xl border border-white/10">
+                                    <label className="text-xs text-slate-400 mb-3 block font-bold">Stock por Talle ({formData.target === 'kid' ? 'Niños' : 'Adultos'})</label>
+                                    <div className={`grid gap-2 ${formData.target === 'kid' ? 'grid-cols-4' : 'grid-cols-7'}`}>
+                                        {currentSizes.map(s => (
+                                            <div key={s} className="text-center">
+                                                <span className="text-[10px] block text-slate-500 mb-1">{s}</span>
+                                                <input type="number" 
+                                                    className="w-full bg-slate-800 border border-white/10 rounded p-2 text-center text-white focus:border-cyan-500 outline-none" 
+                                                    value={formData[`stock${s}`]} 
+                                                    onChange={e=>setFormData({...formData, [`stock${s}`]: e.target.value})} 
+                                                />
+                                            </div>
                                         ))}
                                     </div>
                                 </div>
+
                                 <button type="submit" className="w-full py-3 bg-cyan-600 hover:bg-cyan-500 text-white font-bold rounded-xl">{editProduct ? 'Actualizar Producto' : 'Crear Producto'}</button>
                             </form>
                         )}
@@ -652,64 +769,26 @@
             );
         };
 
-        const OnlineUsers = ({ user }) => {
-            const [count, setCount] = useState(1);
-
-            useEffect(() => {
-                if (!user) return;
-                const { db, APP_ID, collection, doc, setDoc, deleteDoc, onSnapshot } = window.firebase;
-                
-                const presenceRef = collection(db, 'artifacts', APP_ID, 'public', 'data', 'presence');
-                const myDoc = doc(presenceRef, user.uid);
-
-                const beat = () => {
-                    setDoc(myDoc, { last_seen: Date.now() }).catch(err => console.warn("Presence err:", err));
-                };
-
-                beat();
-                const intervalId = setInterval(beat, 5000);
-
-                const unsub = onSnapshot(presenceRef, (snapshot) => {
-                    const now = Date.now();
-                    const active = snapshot.docs.filter(d => {
-                        const data = d.data();
-                        return data.last_seen && (now - data.last_seen < 15000);
-                    }).length;
-                    setCount(Math.max(1, active));
-                });
-
-                return () => {
-                    clearInterval(intervalId);
-                    unsub();
-                    deleteDoc(myDoc).catch(()=>{});
-                };
-            }, [user]);
-
-            return (
-                <div className="hidden md:flex items-center gap-2 bg-slate-800/80 px-3 py-1.5 rounded-full border border-green-500/30">
-                    <span className="relative flex h-2 w-2">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                    </span>
-                    <span className="text-xs font-bold text-green-400">{count} en línea</span>
-                </div>
-            );
-        };
-
-        const ProductDetailView = ({ product, onClose, addToCart, sizes }) => {
+        const ProductDetailView = ({ product, onClose, addToCart }) => {
             const [selectedSize, setSelectedSize] = useState(null);
             const primaryColor = product.colors?.primary || '#3b82f6';
             const secondaryColor = product.colors?.secondary || '#06b6d4';
 
-            // Simular un degradado dinámico basado en los colores elegidos
             const backgroundStyle = {
                 background: `linear-gradient(135deg, ${primaryColor}40 0%, ${secondaryColor}40 100%), #0f172a`
             };
 
+            // Determinar qué lista de talles mostrar
+            const sizesToShow = product.target === 'kid' ? SIZES_KIDS : SIZES_ADULT;
+            
+            // Lógica para stock warning
+            const currentStock = selectedSize ? (product.stock[selectedSize] || 0) : 0;
+            const stockWarning = selectedSize && currentStock > 0 && currentStock <= 5;
+            const lastUnit = selectedSize && currentStock === 1;
+
             return (
                 <div className="fixed inset-0 z-50 overflow-y-auto" style={backgroundStyle}>
                     <div className="min-h-screen flex flex-col relative">
-                        {/* Blobs decorativos usando los colores del producto */}
                         <div className="fixed inset-0 overflow-hidden pointer-events-none">
                             <div className="absolute top-0 left-0 w-[500px] h-[500px] rounded-full blur-[100px] opacity-30 animate-blob" style={{ backgroundColor: primaryColor }}></div>
                             <div className="absolute bottom-0 right-0 w-[500px] h-[500px] rounded-full blur-[100px] opacity-30 animate-blob animation-delay-2000" style={{ backgroundColor: secondaryColor }}></div>
@@ -729,12 +808,10 @@
                             </div>
 
                             <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-start mt-4">
-                                {/* Galería de Imágenes */}
                                 <div className="w-full lg:w-1/2 aspect-square lg:aspect-[4/3] bg-white/5 rounded-3xl overflow-hidden border border-white/10 shadow-2xl relative group">
                                     <ImageSlider images={product.images} alt={product.name} />
                                 </div>
 
-                                {/* Información */}
                                 <div className="w-full lg:w-1/2 space-y-8">
                                     <div>
                                         <div className="flex flex-wrap gap-2 mb-4">
@@ -763,23 +840,30 @@
                                     <div>
                                         <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4">Seleccionar Talle</h3>
                                         <div className="grid grid-cols-4 sm:grid-cols-6 gap-3">
-                                            {product.sizes.map(size => {
+                                            {sizesToShow.map(size => {
                                                 const stock = product.stock[size] || 0;
                                                 return (
                                                     <button key={size} disabled={stock === 0} 
                                                         onClick={() => setSelectedSize(size)}
-                                                        className={`py-3 rounded-xl font-bold border-2 transition-all ${
-                                                            stock===0 ? 'opacity-30 cursor-not-allowed border-white/5 bg-white/5' : 
+                                                        className={`py-3 rounded-xl font-bold border-2 transition-all relative ${
+                                                            stock===0 ? 'opacity-40 cursor-not-allowed border-white/5 bg-white/5' : 
                                                             selectedSize === size ? 'bg-white text-black border-white shadow-[0_0_20px_rgba(255,255,255,0.3)] transform scale-105' : 
                                                             'border-white/20 hover:border-white/60 hover:bg-white/10'
                                                         }`}
                                                     >
                                                         {size}
+                                                        {stock === 0 && <span className="absolute inset-0 flex items-center justify-center text-red-500/50"><X size={30}/></span>}
                                                     </button>
                                                 )
                                             })}
                                         </div>
-                                        {Object.values(product.stock).every(s => s === 0) && <p className="mt-2 text-red-400 font-bold">Sin Stock Disponible</p>}
+                                        
+                                        {/* AVISOS DE STOCK */}
+                                        <div className="h-6 mt-2">
+                                            {lastUnit && <p className="text-red-500 font-black animate-bounce">¡ÚLTIMA UNIDAD DISPONIBLE!</p>}
+                                            {!lastUnit && stockWarning && <p className="text-orange-400 font-bold">¡POCAS UNIDADES!</p>}
+                                            {Object.values(product.stock).every(s => s === 0) && <p className="text-red-400 font-bold">Sin Stock Disponible</p>}
+                                        </div>
                                     </div>
 
                                     <button 
@@ -801,8 +885,8 @@
             );
         };
 
+        // ... (PopularView, App Main - usando estados actualizados)
         const PopularView = ({ products, onBack, onSelectProduct }) => {
-            // Limitado a Top 5
             const sortedProducts = useMemo(() => {
                 return [...products].sort((a,b) => (b.sales || 0) - (a.sales || 0)).slice(0, 5);
             }, [products]);
@@ -846,9 +930,8 @@
             );
         };
 
-        // --- APP PRINCIPAL ---
         function App() {
-            // ... (estados sin cambios)
+            // ... (estados previos)
             const [user, setUser] = useState(null);
             const [products, setProducts] = useState(INITIAL_PRODUCTS); 
             const [categories, setCategories] = useState(INITIAL_CATEGORIES);
@@ -875,7 +958,6 @@
             const [currentPage, setCurrentPage] = useState(1);
             const ITEMS_PER_PAGE = 10;
 
-            // ... (useEffect Auth y Data sin cambios)
             // AUTH Effect
             useEffect(() => {
                 const { auth, onAuthStateChanged, signInAnonymously, signInWithCustomToken, initialToken } = window.firebase;
@@ -900,7 +982,6 @@
                 if (!user) return;
                 const { db, collection, addDoc, onSnapshot, APP_ID, getDocs } = window.firebase;
 
-                // Seed Data
                 const seedData = async () => {
                     try {
                         const productsRef = collection(db, 'artifacts', APP_ID, 'public', 'data', 'products');
@@ -941,8 +1022,6 @@
                 return () => { unsubProducts(); unsubCategories(); unsubContacts(); unsubOrders(); };
             }, [user]);
 
-            // ... (Router Logic sin cambios)
-            // URL Routing Logic (MODIFIED FOR SANDBOX SAFETY)
             useEffect(() => {
                 const handlePopState = () => {
                     const params = new URLSearchParams(window.location.search);
@@ -965,14 +1044,13 @@
                 };
 
                 window.addEventListener('popstate', handlePopState);
-                handlePopState(); // Check on load
+                handlePopState();
                 return () => window.removeEventListener('popstate', handlePopState);
             }, [products]);
 
             const safePushState = (params) => {
                 try {
                     const url = new URL(window.location);
-                    // apply params
                     Object.keys(params).forEach(key => {
                         if (params[key] === null) url.searchParams.delete(key);
                         else url.searchParams.set(key, params[key]);
@@ -1001,7 +1079,6 @@
                 setSelectedProduct(null);
             };
 
-            // ... (Resto de lógica)
             const filteredProducts = useMemo(() => {
                 return products.filter(p => {
                     const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase()) || (p.tags && p.tags.some(t => t.toLowerCase().includes(searchQuery.toLowerCase())));
@@ -1099,7 +1176,6 @@
 
             return (
                 <div className="min-h-screen relative overflow-x-hidden pb-10 transition-colors duration-700">
-                    {/* Background global si no estamos en detalle producto */}
                     {currentView !== 'product' && (
                         <div className="fixed inset-0 z-0 pointer-events-none">
                             <div className={`absolute top-0 left-0 w-[800px] h-[800px] bg-purple-600 rounded-full blur-[120px] opacity-40 -translate-x-1/2 -translate-y-1/2 animate-blob`}></div>
@@ -1140,7 +1216,6 @@
                         <main className="relative z-10 max-w-7xl mx-auto px-4 py-8">
                             <div className="mb-8 space-y-4">
                                 <div className="flex flex-wrap gap-2 justify-center md:justify-start items-center">
-                                    {/* Botones de filtro mejorados con Íconos PRO */}
                                     <button onClick={() => setFilters({...filters, type: 'Todos'})} className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-all flex items-center gap-2 ${filters.type==='Todos'?'bg-white text-slate-900':'bg-white/5 text-slate-300 border-white/10'}`}>
                                         <Layers size={14}/> Todo
                                     </button>
@@ -1169,7 +1244,6 @@
                                                     <div className="relative">
                                                         <img src={p.images[0]} className="w-full h-64 object-cover" />
                                                         <div className="absolute top-2 left-2 flex flex-col gap-1 items-start">
-                                                            {/* Etiquetas limpias: solo Agotado, Descuento, Retro o Actual */}
                                                             {!hasStock && <span className="bg-red-600 text-white text-[10px] px-2 py-1 rounded font-bold shadow">AGOTADO</span>}
                                                             {p.discountPercent > 0 && <span className="bg-green-500 text-white text-[10px] px-2 py-1 rounded font-bold shadow">{p.discountPercent}% OFF</span>}
                                                             {p.type === 'Retro' && <span className="bg-amber-500 text-black text-[10px] px-2 py-1 rounded font-bold shadow flex items-center gap-1"><History size={10}/> RETRO</span>}
@@ -1177,7 +1251,6 @@
                                                         </div>
                                                     </div>
                                                     <div className="p-4">
-                                                        {/* Eliminada la etiqueta de Liga bajo la foto para limpiar */}
                                                         <h3 className="text-white font-bold leading-tight mb-2 truncate">{p.name}</h3>
                                                         <div className="flex items-center gap-2">
                                                             <span className="text-xl font-bold text-white px-2 py-0.5 border border-white/20 bg-black/40 rounded-lg">${p.price.toLocaleString()}</span>
@@ -1209,7 +1282,6 @@
                         <ProductDetailView product={selectedProduct} onClose={navigateToHome} addToCart={addToCart} />
                     )}
 
-                    {/* ... Resto de modales (Cart, Login, Admin, etc.) sin cambios ... */}
                     {isCartOpen && (
                         <div className="fixed inset-0 z-[60] flex justify-end">
                             <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={() => setIsCartOpen(false)} />
