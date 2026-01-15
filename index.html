@@ -50,6 +50,18 @@
             animation: shine-slide 0.75s;
         }
 
+        /* Tricolor Gradient Hover for Logo */
+        .team-logo-hover {
+            transition: all 0.3s ease;
+            filter: drop-shadow(0 0 0 rgba(0,0,0,0));
+        }
+        .group:hover .team-logo-hover {
+            filter: drop-shadow(-2px -2px 4px rgba(6, 182, 212, 0.6)) 
+                    drop-shadow(2px 2px 4px rgba(236, 72, 153, 0.6)) 
+                    drop-shadow(0px -4px 6px rgba(234, 179, 8, 0.6));
+            transform: scale(1.1);
+        }
+
         .glass-select { appearance: none; background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23334155' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e"); background-position: right 0.75rem center; background-repeat: no-repeat; background-size: 1.2em 1.2em; padding-right: 2.5rem; }
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
@@ -163,20 +175,20 @@
         const SIZES_ADULT = ["XS", "S", "M", "L", "XL", "XXL", "3XL"];
         const SIZES_KIDS = ["8", "10", "12", "14"];
 
-        // Productos Iniciales (con target: 'adult' por defecto)
+        // Productos Iniciales - RESETEADOS A 0 VENTAS
         const INITIAL_PRODUCTS = [
-            { id: 1, name: "Argentina 2025", sales: 120, isTop5: true, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Campeón", league: "World Cup", team: "Argentina", type: "Actual", version: "Fan", category: "Selección", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/bNNfKWrw/a-RGENTINA-2025.webp"], tags: ["2025", "Campeón", "Celeste", "Blanco"], description: "Camiseta oficial de la Selección Argentina para la temporada 2025. Tecnología de absorción de humedad AEROREADY.", colors: { primary: "#7dd3fc", secondary: "#ffffff" } },
-            { id: 2, name: "Alemania 2026", sales: 45, isTop5: false, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "", league: "World Cup", team: "Alemania", type: "Actual", version: "Fan", category: "Selección", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/mZSGpBLh/Alemania-2026.webp"], tags: ["2026", "Blanco"], description: "Camiseta local de Alemania para el Mundial 2026. Diseño clásico en blanco y negro.", colors: { primary: "#ffffff", secondary: "#000000" } },
-            { id: 3, name: "Boca Retro 1998", sales: 85, isTop5: true, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Retro", league: "Argentina LPF", team: "Boca Juniors", type: "Retro", version: "Normal", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/wxkd4gqJ/Boca-retro-1998.webp"], tags: ["Retro", "1998", "Azul", "Amarillo"], description: "Edición retro histórica de Boca Juniors 1998. Cuello polo y franja amarilla tradicional.", colors: { primary: "#1e3a8a", secondary: "#eab308" } },
-            { id: 4, name: "Boca Titular 2025", sales: 95, isTop5: true, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Nuevo", league: "Argentina LPF", team: "Boca Juniors", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/QNqrYh87/Boca-titular-2025.webp"], tags: ["2025", "Azul", "Oro"], description: "Camiseta titular de Boca Juniors temporada 2025.", colors: { primary: "#1d4ed8", secondary: "#eab308" } },
-            { id: 5, name: "Chelsea 2026", sales: 30, isTop5: false, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Player Version", league: "Premier League", team: "Chelsea", type: "Actual", version: "Player", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/nccf6grX/CHELSEA-2026.avif"], tags: ["2026", "Blues", "Azul"], description: "Camiseta Chelsea 2026 versión jugador. Corte ajustado y tecnología de ventilación avanzada.", colors: { primary: "#2563eb", secondary: "#1e40af" } },
-            { id: 6, name: "Liverpool Suplente", sales: 25, isTop5: false, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Suplente", league: "Premier League", team: "Liverpool", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/L66Frw5q/LIVERPOOL-SUPLENTE.webp"], tags: ["Suplente", "Verde"], description: "Segunda equipación del Liverpool. Diseño moderno y urbano.", colors: { primary: "#16a34a", secondary: "#ffffff" } },
-            { id: 7, name: "Milan Titular", sales: 55, isTop5: false, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Clásico", league: "Serie A", team: "Milan", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/L66Frw5Y/MILAN-TITULAR.webp"], tags: ["Rojo", "Negro"], description: "Camiseta clásica a rayas rojas y negras del AC Milan.", colors: { primary: "#dc2626", secondary: "#000000" } },
-            { id: 8, name: "Real Madrid Tercera", sales: 70, isTop5: false, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Tercera", league: "La Liga", team: "Real Madrid", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/kXXPkzGt/Real-Madrid-tercera.webp"], tags: ["Tercera", "Gris"], description: "Tercera equipación del Real Madrid. Elegancia y estilo.", colors: { primary: "#1f2937", secondary: "#eab308" } },
-            { id: 9, name: "River 2025", sales: 90, isTop5: true, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Nuevo", league: "Argentina LPF", team: "River Plate", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/CLLpWX58/River-2025.jpg"], tags: ["2025", "Blanco", "Rojo"], description: "Camiseta titular de River Plate 2025. La banda roja tradicional.", colors: { primary: "#ffffff", secondary: "#dc2626" } },
-            { id: 10, name: "Corinthians Suplente", sales: 15, isTop5: false, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Suplente", league: "Brasileirao", team: "Corinthians", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/GhhnZVtG/SUPLENTE-CORINTHIANS.webp"], tags: ["Suplente", "Negro"], description: "Camiseta negra alternativa del Timao.", colors: { primary: "#000000", secondary: "#ffffff" } },
-            { id: 11, name: "PSG Suplente", sales: 40, isTop5: false, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Suplente", league: "Ligue 1", team: "PSG", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/3JJQPVNp/SUPLENTE-PSG.jpg"], tags: ["Suplente", "Azul"], description: "Camiseta suplente del Paris Saint-Germain.", colors: { primary: "#1e3a8a", secondary: "#dc2626" } },
-            { id: 12, name: "Barcelona Tercera", sales: 65, isTop5: true, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Tercera", league: "La Liga", team: "Barcelona", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/RVVxjyhR/TERCERA-BARCELONA.webp"], tags: ["Tercera", "Verde"], description: "Tercera camiseta del FC Barcelona. Diseño vibrante.", colors: { primary: "#14b8a6", secondary: "#1e3a8a" } }
+            { id: 1, name: "Argentina 2025", sales: 0, isTop5: true, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Campeón", league: "World Cup", team: "Argentina", type: "Actual", version: "Fan", category: "Selección", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/bNNfKWrw/a-RGENTINA-2025.webp"], tags: ["2025", "Campeón", "Celeste", "Blanco"], description: "Camiseta oficial de la Selección Argentina para la temporada 2025. Tecnología de absorción de humedad AEROREADY.", colors: { primary: "#7dd3fc", secondary: "#ffffff" }, teamLogo: "https://upload.wikimedia.org/wikipedia/commons/f/f7/AFA_logo.svg" },
+            { id: 2, name: "Alemania 2026", sales: 0, isTop5: false, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "", league: "World Cup", team: "Alemania", type: "Actual", version: "Fan", category: "Selección", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/mZSGpBLh/Alemania-2026.webp"], tags: ["2026", "Blanco"], description: "Camiseta local de Alemania para el Mundial 2026. Diseño clásico en blanco y negro.", colors: { primary: "#ffffff", secondary: "#000000" } },
+            { id: 3, name: "Boca Retro 1998", sales: 0, isTop5: true, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Retro", league: "Argentina LPF", team: "Boca Juniors", type: "Retro", version: "Normal", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/wxkd4gqJ/Boca-retro-1998.webp"], tags: ["Retro", "1998", "Azul", "Amarillo"], description: "Edición retro histórica de Boca Juniors 1998. Cuello polo y franja amarilla tradicional.", colors: { primary: "#1e3a8a", secondary: "#eab308" } },
+            { id: 4, name: "Boca Titular 2025", sales: 0, isTop5: true, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Nuevo", league: "Argentina LPF", team: "Boca Juniors", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/QNqrYh87/Boca-titular-2025.webp"], tags: ["2025", "Azul", "Oro"], description: "Camiseta titular de Boca Juniors temporada 2025.", colors: { primary: "#1d4ed8", secondary: "#eab308" } },
+            { id: 5, name: "Chelsea 2026", sales: 0, isTop5: false, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Player Version", league: "Premier League", team: "Chelsea", type: "Actual", version: "Player", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/nccf6grX/CHELSEA-2026.avif"], tags: ["2026", "Blues", "Azul"], description: "Camiseta Chelsea 2026 versión jugador. Corte ajustado y tecnología de ventilación avanzada.", colors: { primary: "#2563eb", secondary: "#1e40af" } },
+            { id: 6, name: "Liverpool Suplente", sales: 0, isTop5: false, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Suplente", league: "Premier League", team: "Liverpool", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/L66Frw5q/LIVERPOOL-SUPLENTE.webp"], tags: ["Suplente", "Verde"], description: "Segunda equipación del Liverpool. Diseño moderno y urbano.", colors: { primary: "#16a34a", secondary: "#ffffff" } },
+            { id: 7, name: "Milan Titular", sales: 0, isTop5: false, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Clásico", league: "Serie A", team: "Milan", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/L66Frw5Y/MILAN-TITULAR.webp"], tags: ["Rojo", "Negro"], description: "Camiseta clásica a rayas rojas y negras del AC Milan.", colors: { primary: "#dc2626", secondary: "#000000" } },
+            { id: 8, name: "Real Madrid Tercera", sales: 0, isTop5: false, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Tercera", league: "La Liga", team: "Real Madrid", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/kXXPkzGt/Real-Madrid-tercera.webp"], tags: ["Tercera", "Gris"], description: "Tercera equipación del Real Madrid. Elegancia y estilo.", colors: { primary: "#1f2937", secondary: "#eab308" } },
+            { id: 9, name: "River 2025", sales: 0, isTop5: true, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Nuevo", league: "Argentina LPF", team: "River Plate", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/CLLpWX58/River-2025.jpg"], tags: ["2025", "Blanco", "Rojo"], description: "Camiseta titular de River Plate 2025. La banda roja tradicional.", colors: { primary: "#ffffff", secondary: "#dc2626" } },
+            { id: 10, name: "Corinthians Suplente", sales: 0, isTop5: false, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Suplente", league: "Brasileirao", team: "Corinthians", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/GhhnZVtG/SUPLENTE-CORINTHIANS.webp"], tags: ["Suplente", "Negro"], description: "Camiseta negra alternativa del Timao.", colors: { primary: "#000000", secondary: "#ffffff" } },
+            { id: 11, name: "PSG Suplente", sales: 0, isTop5: false, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Suplente", league: "Ligue 1", team: "PSG", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/3JJQPVNp/SUPLENTE-PSG.jpg"], tags: ["Suplente", "Azul"], description: "Camiseta suplente del Paris Saint-Germain.", colors: { primary: "#1e3a8a", secondary: "#dc2626" } },
+            { id: 12, name: "Barcelona Tercera", sales: 0, isTop5: true, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Tercera", league: "La Liga", team: "Barcelona", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/RVVxjyhR/TERCERA-BARCELONA.webp"], tags: ["Tercera", "Verde"], description: "Tercera camiseta del FC Barcelona. Diseño vibrante.", colors: { primary: "#14b8a6", secondary: "#1e3a8a" } }
         ];
 
         // ... (Componentes Badge, ImageSlider, BuyerForm, TicketView, LoginModal, Sidebar, OnlineUsers sin cambios)
@@ -196,6 +208,7 @@
             );
         };
 
+        // ... (BuyerForm, TicketView, LoginModal, Sidebar, OnlineUsers sin cambios mayores, solo Sidebar referenciado) ...
         const BuyerForm = ({ onSubmit, onClose }) => {
             const [formData, setFormData] = useState({ name: "", email: "", whatsapp: "", country: "", province: "" });
             const handleSubmit = (e) => {
@@ -426,7 +439,8 @@
             const [activeTab, setActiveTab] = useState('list');
             const [editProduct, setEditProduct] = useState(null);
             
-            const initialForm = { name: "", originalPrice: "45000", discountPercent: 0, specialDiscountLabel: "", league: "", team: "", type: "Actual", version: "Fan", category: "Club", target: "adult", isTop5: false, images: "", tags: "", description: "", colorPrimary: "#000000", colorSecondary: "#ffffff" };
+            // Added teamLogo field to initial state
+            const initialForm = { name: "", originalPrice: "45000", discountPercent: 0, specialDiscountLabel: "", league: "", team: "", type: "Actual", version: "Fan", category: "Club", target: "adult", isTop5: false, images: "", tags: "", description: "", colorPrimary: "#000000", colorSecondary: "#ffffff", teamLogo: "", sales: 0 };
             SIZES_ADULT.forEach(s => initialForm[`stock${s}`] = 0);
             SIZES_KIDS.forEach(s => initialForm[`stock${s}`] = 0);
 
@@ -445,7 +459,9 @@
                     isTop5: p.isTop5 || false,
                     images: p.images.join(', '), tags: p.tags.join(', '), description: p.description || "",
                     colorPrimary: p.colors?.primary || "#000000",
-                    colorSecondary: p.colors?.secondary || "#ffffff"
+                    colorSecondary: p.colors?.secondary || "#ffffff",
+                    teamLogo: p.teamLogo || "",
+                    sales: p.sales || 0
                 };
                 
                 SIZES_ADULT.forEach(s => newData[`stock${s}`] = p.stock ? (p.stock[s] || 0) : 0);
@@ -479,8 +495,9 @@
                     images: imagesArr,
                     tags: tagsArr,
                     colors: { primary: formData.colorPrimary, secondary: formData.colorSecondary },
-                    sales: editProduct ? (editProduct.sales || 0) : 0,
-                    isTop5: formData.isTop5
+                    sales: parseInt(formData.sales) || 0, // Manual sales override
+                    isTop5: formData.isTop5,
+                    teamLogo: formData.teamLogo
                 };
                 
                 SIZES_ADULT.forEach(s => delete productData[`stock${s}`]);
@@ -624,18 +641,26 @@
                                     <input placeholder="Nombre Descuento Especial (Ej: FINAL CHAMPIONS)" className="bg-slate-50 border border-slate-200 rounded p-3 text-slate-900 w-full outline-none focus:border-cyan-500" value={formData.specialDiscountLabel} onChange={e=>setFormData({...formData, specialDiscountLabel: e.target.value})} />
                                     <input placeholder="Etiquetas (coma)" className="bg-slate-50 border border-slate-200 rounded p-3 text-slate-900 outline-none focus:border-cyan-500" value={formData.tags} onChange={e=>setFormData({...formData, tags: e.target.value})} />
                                 </div>
-                                <div className="grid grid-cols-3 gap-4">
+                                <div className="grid grid-cols-2 gap-4">
                                     <input placeholder="Equipo" className="bg-slate-50 border border-slate-200 rounded p-3 text-slate-900 outline-none focus:border-cyan-500" value={formData.team} onChange={e=>setFormData({...formData, team: e.target.value})} />
                                     <input placeholder="Liga" className="bg-slate-50 border border-slate-200 rounded p-3 text-slate-900 outline-none focus:border-cyan-500" value={formData.league} onChange={e=>setFormData({...formData, league: e.target.value})} />
+                                </div>
+                                {/* New Fields: Logo and Sales */}
+                                <div className="grid grid-cols-2 gap-4">
+                                    <input placeholder="URL Escudo Equipo" className="bg-slate-50 border border-slate-200 rounded p-3 text-slate-900 outline-none focus:border-cyan-500" value={formData.teamLogo} onChange={e=>setFormData({...formData, teamLogo: e.target.value})} />
                                     <div>
-                                        <select className="w-full bg-slate-50 border border-slate-200 rounded p-3 text-slate-900 outline-none focus:border-cyan-500" value={formData.type} onChange={e=>setFormData({...formData, type: e.target.value})}><option value="Actual">Actual</option><option value="Retro">Retro</option></select>
+                                        <label className="text-xs text-slate-500 mb-1 block">Ventas Históricas</label>
+                                        <input type="number" className="bg-slate-50 border border-slate-200 rounded p-3 text-slate-900 w-full outline-none focus:border-cyan-500" value={formData.sales} onChange={e=>setFormData({...formData, sales: e.target.value})} />
                                     </div>
                                 </div>
                                 <div>
                                     <label className="text-xs text-slate-500 mb-1 block">Versión de la Camiseta</label>
+                                    <select className="w-full bg-slate-50 border border-slate-200 rounded p-3 text-slate-900 outline-none focus:border-cyan-500" value={formData.type} onChange={e=>setFormData({...formData, type: e.target.value})}><option value="Actual">Actual</option><option value="Retro">Retro</option></select>
+                                </div>
+                                <div>
                                     <select className="w-full bg-slate-50 border border-slate-200 rounded p-3 text-slate-900 outline-none focus:border-cyan-500" value={formData.version} onChange={e=>setFormData({...formData, version: e.target.value})}>
                                         <option value="Normal">Normal</option>
-                                        <option value="Fan">Fan (Hincha)</option>
+                                        <option value="Fan">Fan (Hinchada)</option>
                                         <option value="Player">Jugador (Match)</option>
                                     </select>
                                 </div>
@@ -823,12 +848,15 @@
 
                                 <div className="w-full lg:w-1/2 space-y-8">
                                     <div>
-                                        <div className="flex flex-wrap gap-2 mb-4">
+                                        <div className="flex flex-wrap gap-2 mb-4 items-center">
                                             <Badge color="blue">{product.league}</Badge>
                                             <span className="bg-white/50 border border-slate-200 px-3 py-1 rounded-full text-sm font-bold text-slate-700">{product.version}</span>
                                             {product.specialDiscountLabel && <span className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-3 py-1 rounded-full text-sm font-bold shadow-md animate-pulse">{product.specialDiscountLabel}</span>}
                                         </div>
-                                        <h1 className="text-4xl md:text-6xl font-black text-slate-900 leading-tight mb-2 drop-shadow-sm">{product.name}</h1>
+                                        <h1 className="text-4xl md:text-6xl font-black text-slate-900 leading-tight mb-2 drop-shadow-sm flex items-center gap-3">
+                                            {product.name}
+                                            {product.teamLogo && <img src={product.teamLogo} alt={product.team} className="h-12 w-12 object-contain team-logo-hover" />}
+                                        </h1>
                                         <p className="text-xl text-slate-600 font-light">{product.team}</p>
                                     </div>
 
@@ -894,9 +922,7 @@
 
         const PopularView = ({ products, onBack, onSelectProduct }) => {
             const sortedProducts = useMemo(() => {
-                // Modificado para usar Top 5 Manual si está activado
                 const manualTop5 = products.filter(p => p.isTop5);
-                // Si hay productos marcados manualmente, usarlos, sino usar ventas
                 const list = manualTop5.length > 0 ? manualTop5 : [...products].sort((a,b) => (b.sales || 0) - (a.sales || 0));
                 return list.slice(0, 5);
             }, [products]);
@@ -928,6 +954,7 @@
                                     <div className="flex-1 min-w-0">
                                         <div className="flex items-center gap-2 mb-1">
                                             <span className="text-xs font-bold uppercase opacity-80">{p.league}</span>
+                                            {p.teamLogo && <img src={p.teamLogo} className="h-6 w-6 object-contain team-logo-hover" />}
                                         </div>
                                         <h3 className="text-lg md:text-2xl font-black leading-tight truncate">{p.name}</h3>
                                         <p className="text-sm opacity-80 truncate">{p.team}</p>
@@ -1153,24 +1180,37 @@
                 if (!orderDoc) { alert("Orden no encontrada en pendientes"); return; }
                 
                 try {
-                    const newProducts = products.map(p => {
-                        const itemInOrder = orderDoc.items.find(i => i.id === p.id);
-                        if (itemInOrder) {
-                            const newStock = { ...p.stock };
-                            newStock[itemInOrder.size] = Math.max(0, newStock[itemInOrder.size] - itemInOrder.qty);
-                            return { ...p, stock: newStock, sales: (p.sales || 0) + itemInOrder.qty };
-                        }
-                        return p;
-                    });
-                    setProducts(newProducts);
-                    localStorage.setItem('ayp_products_v9', JSON.stringify(newProducts));
+                    // Update Local State FIRST (Optimistic)
+                    // Create deep copy of products to avoid mutation issues during iteration
+                    let updatedProducts = [...products];
 
+                    for (const item of orderDoc.items) {
+                        updatedProducts = updatedProducts.map(p => {
+                            if (p.id === item.id) {
+                                const newStock = { ...p.stock };
+                                newStock[item.size] = Math.max(0, newStock[item.size] - item.qty);
+                                return { ...p, stock: newStock, sales: (p.sales || 0) + item.qty };
+                            }
+                            return p;
+                        });
+                    }
+
+                    // Save locally once
+                    setProducts(updatedProducts);
+                    localStorage.setItem('ayp_products_v9', JSON.stringify(updatedProducts));
+
+                    // Then try to sync with Firebase
                     for (const item of orderDoc.items) {
                         const product = products.find(p => p.id === item.id);
                         if (product) {
                             const newStock = { ...product.stock };
                             newStock[item.size] = Math.max(0, newStock[item.size] - item.qty);
-                            await DBService.update('products', product.id, { stock: newStock, sales: (product.sales || 0) + item.qty }, setProducts, products);
+                            // Only call updateDoc, avoid re-triggering setProducts here
+                            const { db, APP_ID, doc, updateDoc } = window.firebase;
+                            if (typeof product.id === 'string') {
+                                const ref = doc(db, 'artifacts', APP_ID, 'public', 'data', 'products', product.id);
+                                await updateDoc(ref, { stock: newStock, sales: (product.sales || 0) + item.qty }).catch(e => console.warn("Firebase update failed", e));
+                            }
                         }
                     }
                     
@@ -1275,7 +1315,10 @@
                                                         <div className="h-6 mb-1 flex items-center">
                                                             {category ? <img src={category.image} alt={p.league} className="h-full object-contain" /> : <span className="text-xs font-bold uppercase text-slate-400">{p.league}</span>}
                                                         </div>
-                                                        <h3 className="text-slate-800 font-bold leading-tight mb-2 truncate">{p.name}</h3>
+                                                        <h3 className="text-slate-800 font-bold leading-tight mb-2 truncate flex items-center gap-2">
+                                                            {p.name}
+                                                            {p.teamLogo && <img src={p.teamLogo} alt="team" className="w-6 h-6 object-contain team-logo-hover" />}
+                                                        </h3>
                                                         <div className="flex items-center gap-2 mt-2">
                                                             <span className="text-lg font-bold text-slate-900 border border-slate-200 bg-slate-50 px-2 py-1 rounded-lg">${p.price.toLocaleString()}</span>
                                                             {p.discountPercent > 0 && <span className="text-xs text-slate-400 line-through decoration-slate-400">${p.originalPrice.toLocaleString()}</span>}
