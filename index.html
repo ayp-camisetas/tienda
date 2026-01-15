@@ -50,9 +50,6 @@
             animation: shine-slide 0.75s;
         }
 
-        .logo-wrapper { position: relative; overflow: hidden; border-radius: 12px; padding: 5px; }
-        .logo-img { transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); filter: drop-shadow(0 0 0 rgba(0,0,0,0)); }
-        .logo-wrapper:hover .logo-img { filter: drop-shadow(-6px -6px 8px rgba(0, 100, 255, 0.6)) drop-shadow(0px 0px 8px rgba(255, 255, 255, 0.8)) drop-shadow(6px 6px 8px rgba(255, 0, 50, 0.6)); transform: scale(1.1) rotate(2deg); }
         .glass-select { appearance: none; background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23334155' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e"); background-position: right 0.75rem center; background-repeat: no-repeat; background-size: 1.2em 1.2em; padding-right: 2.5rem; }
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
@@ -168,21 +165,21 @@
 
         // Productos Iniciales (con target: 'adult' por defecto)
         const INITIAL_PRODUCTS = [
-            { id: 1, name: "Argentina 2025", sales: 120, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Campeón", league: "World Cup", team: "Argentina", type: "Actual", version: "Fan", category: "Selección", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/bNNfKWrw/a-RGENTINA-2025.webp"], tags: ["2025", "Campeón", "Celeste", "Blanco"], description: "Camiseta oficial de la Selección Argentina para la temporada 2025. Tecnología de absorción de humedad AEROREADY.", colors: { primary: "#7dd3fc", secondary: "#ffffff" } },
-            { id: 2, name: "Alemania 2026", sales: 45, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "", league: "World Cup", team: "Alemania", type: "Actual", version: "Fan", category: "Selección", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/mZSGpBLh/Alemania-2026.webp"], tags: ["2026", "Blanco"], description: "Camiseta local de Alemania para el Mundial 2026. Diseño clásico en blanco y negro.", colors: { primary: "#ffffff", secondary: "#000000" } },
-            { id: 3, name: "Boca Retro 1998", sales: 85, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Retro", league: "Argentina LPF", team: "Boca Juniors", type: "Retro", version: "Normal", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/wxkd4gqJ/Boca-retro-1998.webp"], tags: ["Retro", "1998", "Azul", "Amarillo"], description: "Edición retro histórica de Boca Juniors 1998. Cuello polo y franja amarilla tradicional.", colors: { primary: "#1e3a8a", secondary: "#eab308" } },
-            { id: 4, name: "Boca Titular 2025", sales: 95, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Nuevo", league: "Argentina LPF", team: "Boca Juniors", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/QNqrYh87/Boca-titular-2025.webp"], tags: ["2025", "Azul", "Oro"], description: "Camiseta titular de Boca Juniors temporada 2025.", colors: { primary: "#1d4ed8", secondary: "#eab308" } },
-            { id: 5, name: "Chelsea 2026", sales: 30, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Player Version", league: "Premier League", team: "Chelsea", type: "Actual", version: "Player", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/nccf6grX/CHELSEA-2026.avif"], tags: ["2026", "Blues", "Azul"], description: "Camiseta Chelsea 2026 versión jugador. Corte ajustado y tecnología de ventilación avanzada.", colors: { primary: "#2563eb", secondary: "#1e40af" } },
-            { id: 6, name: "Liverpool Suplente", sales: 25, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Suplente", league: "Premier League", team: "Liverpool", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/L66Frw5q/LIVERPOOL-SUPLENTE.webp"], tags: ["Suplente", "Verde"], description: "Segunda equipación del Liverpool. Diseño moderno y urbano.", colors: { primary: "#16a34a", secondary: "#ffffff" } },
-            { id: 7, name: "Milan Titular", sales: 55, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Clásico", league: "Serie A", team: "Milan", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/L66Frw5Y/MILAN-TITULAR.webp"], tags: ["Rojo", "Negro"], description: "Camiseta clásica a rayas rojas y negras del AC Milan.", colors: { primary: "#dc2626", secondary: "#000000" } },
-            { id: 8, name: "Real Madrid Tercera", sales: 70, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Tercera", league: "La Liga", team: "Real Madrid", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/kXXPkzGt/Real-Madrid-tercera.webp"], tags: ["Tercera", "Gris"], description: "Tercera equipación del Real Madrid. Elegancia y estilo.", colors: { primary: "#1f2937", secondary: "#eab308" } },
-            { id: 9, name: "River 2025", sales: 90, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Nuevo", league: "Argentina LPF", team: "River Plate", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/CLLpWX58/River-2025.jpg"], tags: ["2025", "Blanco", "Rojo"], description: "Camiseta titular de River Plate 2025. La banda roja tradicional.", colors: { primary: "#ffffff", secondary: "#dc2626" } },
-            { id: 10, name: "Corinthians Suplente", sales: 15, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Suplente", league: "Brasileirao", team: "Corinthians", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/GhhnZVtG/SUPLENTE-CORINTHIANS.webp"], tags: ["Suplente", "Negro"], description: "Camiseta negra alternativa del Timao.", colors: { primary: "#000000", secondary: "#ffffff" } },
-            { id: 11, name: "PSG Suplente", sales: 40, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Suplente", league: "Ligue 1", team: "PSG", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/3JJQPVNp/SUPLENTE-PSG.jpg"], tags: ["Suplente", "Azul"], description: "Camiseta suplente del Paris Saint-Germain.", colors: { primary: "#1e3a8a", secondary: "#dc2626" } },
-            { id: 12, name: "Barcelona Tercera", sales: 65, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Tercera", league: "La Liga", team: "Barcelona", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/RVVxjyhR/TERCERA-BARCELONA.webp"], tags: ["Tercera", "Verde"], description: "Tercera camiseta del FC Barcelona. Diseño vibrante.", colors: { primary: "#14b8a6", secondary: "#1e3a8a" } }
+            { id: 1, name: "Argentina 2025", sales: 120, isTop5: true, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Campeón", league: "World Cup", team: "Argentina", type: "Actual", version: "Fan", category: "Selección", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/bNNfKWrw/a-RGENTINA-2025.webp"], tags: ["2025", "Campeón", "Celeste", "Blanco"], description: "Camiseta oficial de la Selección Argentina para la temporada 2025. Tecnología de absorción de humedad AEROREADY.", colors: { primary: "#7dd3fc", secondary: "#ffffff" } },
+            { id: 2, name: "Alemania 2026", sales: 45, isTop5: false, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "", league: "World Cup", team: "Alemania", type: "Actual", version: "Fan", category: "Selección", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/mZSGpBLh/Alemania-2026.webp"], tags: ["2026", "Blanco"], description: "Camiseta local de Alemania para el Mundial 2026. Diseño clásico en blanco y negro.", colors: { primary: "#ffffff", secondary: "#000000" } },
+            { id: 3, name: "Boca Retro 1998", sales: 85, isTop5: true, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Retro", league: "Argentina LPF", team: "Boca Juniors", type: "Retro", version: "Normal", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/wxkd4gqJ/Boca-retro-1998.webp"], tags: ["Retro", "1998", "Azul", "Amarillo"], description: "Edición retro histórica de Boca Juniors 1998. Cuello polo y franja amarilla tradicional.", colors: { primary: "#1e3a8a", secondary: "#eab308" } },
+            { id: 4, name: "Boca Titular 2025", sales: 95, isTop5: true, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Nuevo", league: "Argentina LPF", team: "Boca Juniors", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/QNqrYh87/Boca-titular-2025.webp"], tags: ["2025", "Azul", "Oro"], description: "Camiseta titular de Boca Juniors temporada 2025.", colors: { primary: "#1d4ed8", secondary: "#eab308" } },
+            { id: 5, name: "Chelsea 2026", sales: 30, isTop5: false, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Player Version", league: "Premier League", team: "Chelsea", type: "Actual", version: "Player", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/nccf6grX/CHELSEA-2026.avif"], tags: ["2026", "Blues", "Azul"], description: "Camiseta Chelsea 2026 versión jugador. Corte ajustado y tecnología de ventilación avanzada.", colors: { primary: "#2563eb", secondary: "#1e40af" } },
+            { id: 6, name: "Liverpool Suplente", sales: 25, isTop5: false, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Suplente", league: "Premier League", team: "Liverpool", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/L66Frw5q/LIVERPOOL-SUPLENTE.webp"], tags: ["Suplente", "Verde"], description: "Segunda equipación del Liverpool. Diseño moderno y urbano.", colors: { primary: "#16a34a", secondary: "#ffffff" } },
+            { id: 7, name: "Milan Titular", sales: 55, isTop5: false, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Clásico", league: "Serie A", team: "Milan", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/L66Frw5Y/MILAN-TITULAR.webp"], tags: ["Rojo", "Negro"], description: "Camiseta clásica a rayas rojas y negras del AC Milan.", colors: { primary: "#dc2626", secondary: "#000000" } },
+            { id: 8, name: "Real Madrid Tercera", sales: 70, isTop5: false, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Tercera", league: "La Liga", team: "Real Madrid", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/kXXPkzGt/Real-Madrid-tercera.webp"], tags: ["Tercera", "Gris"], description: "Tercera equipación del Real Madrid. Elegancia y estilo.", colors: { primary: "#1f2937", secondary: "#eab308" } },
+            { id: 9, name: "River 2025", sales: 90, isTop5: true, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Nuevo", league: "Argentina LPF", team: "River Plate", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/CLLpWX58/River-2025.jpg"], tags: ["2025", "Blanco", "Rojo"], description: "Camiseta titular de River Plate 2025. La banda roja tradicional.", colors: { primary: "#ffffff", secondary: "#dc2626" } },
+            { id: 10, name: "Corinthians Suplente", sales: 15, isTop5: false, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Suplente", league: "Brasileirao", team: "Corinthians", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/GhhnZVtG/SUPLENTE-CORINTHIANS.webp"], tags: ["Suplente", "Negro"], description: "Camiseta negra alternativa del Timao.", colors: { primary: "#000000", secondary: "#ffffff" } },
+            { id: 11, name: "PSG Suplente", sales: 40, isTop5: false, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Suplente", league: "Ligue 1", team: "PSG", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/3JJQPVNp/SUPLENTE-PSG.jpg"], tags: ["Suplente", "Azul"], description: "Camiseta suplente del Paris Saint-Germain.", colors: { primary: "#1e3a8a", secondary: "#dc2626" } },
+            { id: 12, name: "Barcelona Tercera", sales: 65, isTop5: true, price: 45000, originalPrice: 45000, discountPercent: 0, specialDiscountLabel: "Tercera", league: "La Liga", team: "Barcelona", type: "Actual", version: "Fan", category: "Club", target: "adult", stock: { "XS": 1, "S": 1, "M": 1, "L": 1, "XL": 1, "XXL": 1, "3XL": 1 }, images: ["https://i.postimg.cc/RVVxjyhR/TERCERA-BARCELONA.webp"], tags: ["Tercera", "Verde"], description: "Tercera camiseta del FC Barcelona. Diseño vibrante.", colors: { primary: "#14b8a6", secondary: "#1e3a8a" } }
         ];
 
-        // --- COMPONENTES AUXILIARES ---
+        // ... (Componentes Badge, ImageSlider, BuyerForm, TicketView, LoginModal, Sidebar, OnlineUsers sin cambios)
         const Badge = ({ children, color = "blue" }) => {
             const colors = { blue: "bg-blue-100 text-blue-800 border-blue-200", purple: "bg-purple-100 text-purple-800 border-purple-200", green: "bg-green-100 text-green-800 border-green-200", amber: "bg-amber-100 text-amber-800 border-amber-200", red: "bg-red-100 text-red-800 border-red-200", gray: "bg-slate-100 text-slate-800 border-slate-200", pink: "bg-pink-100 text-pink-800 border-pink-200" };
             return <span className={`px-2 py-0.5 rounded-full text-xs font-medium border ${colors[color]}`}>{children}</span>;
@@ -199,7 +196,6 @@
             );
         };
 
-        // ... (BuyerForm, TicketView, LoginModal, Sidebar, OnlineUsers sin cambios mayores, solo Sidebar referenciado) ...
         const BuyerForm = ({ onSubmit, onClose }) => {
             const [formData, setFormData] = useState({ name: "", email: "", whatsapp: "", country: "", province: "" });
             const handleSubmit = (e) => {
@@ -430,7 +426,7 @@
             const [activeTab, setActiveTab] = useState('list');
             const [editProduct, setEditProduct] = useState(null);
             
-            const initialForm = { name: "", originalPrice: "45000", discountPercent: 0, specialDiscountLabel: "", league: "", team: "", type: "Actual", version: "Fan", category: "Club", target: "adult", images: "", tags: "", description: "", colorPrimary: "#000000", colorSecondary: "#ffffff" };
+            const initialForm = { name: "", originalPrice: "45000", discountPercent: 0, specialDiscountLabel: "", league: "", team: "", type: "Actual", version: "Fan", category: "Club", target: "adult", isTop5: false, images: "", tags: "", description: "", colorPrimary: "#000000", colorSecondary: "#ffffff" };
             SIZES_ADULT.forEach(s => initialForm[`stock${s}`] = 0);
             SIZES_KIDS.forEach(s => initialForm[`stock${s}`] = 0);
 
@@ -446,6 +442,7 @@
                     specialDiscountLabel: p.specialDiscountLabel || "",
                     league: p.league, team: p.team, type: p.type, version: p.version || "Fan", category: p.category,
                     target: p.target || "adult",
+                    isTop5: p.isTop5 || false,
                     images: p.images.join(', '), tags: p.tags.join(', '), description: p.description || "",
                     colorPrimary: p.colors?.primary || "#000000",
                     colorSecondary: p.colors?.secondary || "#ffffff"
@@ -482,7 +479,8 @@
                     images: imagesArr,
                     tags: tagsArr,
                     colors: { primary: formData.colorPrimary, secondary: formData.colorSecondary },
-                    sales: editProduct ? (editProduct.sales || 0) : 0
+                    sales: editProduct ? (editProduct.sales || 0) : 0,
+                    isTop5: formData.isTop5
                 };
                 
                 SIZES_ADULT.forEach(s => delete productData[`stock${s}`]);
@@ -586,18 +584,24 @@
                                     Precio Final Calculado: <span className="font-bold text-green-600">${(formData.originalPrice * (1 - formData.discountPercent/100)).toLocaleString()}</span>
                                 </div>
                                 
-                                <div>
-                                    <label className="text-xs text-slate-500 mb-2 block font-bold uppercase">Tipo de Producto (Define Talles)</label>
-                                    <div className="flex gap-4">
-                                        <label className="flex items-center gap-2 cursor-pointer bg-slate-50 px-4 py-2 rounded border border-slate-200 has-[:checked]:border-cyan-500 has-[:checked]:bg-cyan-50 text-slate-700">
-                                            <input type="radio" name="target" value="adult" checked={formData.target !== 'kid'} onChange={() => setFormData({...formData, target: 'adult'})} className="hidden" />
-                                            <span className="text-sm font-bold">Adultos (XS - 3XL)</span>
-                                        </label>
-                                        <label className="flex items-center gap-2 cursor-pointer bg-slate-50 px-4 py-2 rounded border border-slate-200 has-[:checked]:border-pink-500 has-[:checked]:bg-pink-50 text-slate-700">
-                                            <input type="radio" name="target" value="kid" checked={formData.target === 'kid'} onChange={() => setFormData({...formData, target: 'kid'})} className="hidden" />
-                                            <span className="text-sm font-bold">Niños (8 - 14)</span>
-                                        </label>
+                                <div className="flex justify-between items-center">
+                                    <div>
+                                        <label className="text-xs text-slate-500 mb-2 block font-bold uppercase">Tipo de Producto (Define Talles)</label>
+                                        <div className="flex gap-4">
+                                            <label className="flex items-center gap-2 cursor-pointer bg-slate-50 px-4 py-2 rounded border border-slate-200 has-[:checked]:border-cyan-500 has-[:checked]:bg-cyan-50 text-slate-700">
+                                                <input type="radio" name="target" value="adult" checked={formData.target !== 'kid'} onChange={() => setFormData({...formData, target: 'adult'})} className="hidden" />
+                                                <span className="text-sm font-bold">Adultos (XS - 3XL)</span>
+                                            </label>
+                                            <label className="flex items-center gap-2 cursor-pointer bg-slate-50 px-4 py-2 rounded border border-slate-200 has-[:checked]:border-pink-500 has-[:checked]:bg-pink-50 text-slate-700">
+                                                <input type="radio" name="target" value="kid" checked={formData.target === 'kid'} onChange={() => setFormData({...formData, target: 'kid'})} className="hidden" />
+                                                <span className="text-sm font-bold">Niños (8 - 14)</span>
+                                            </label>
+                                        </div>
                                     </div>
+                                    <label className="flex items-center gap-2 cursor-pointer bg-yellow-50 px-4 py-2 rounded border border-yellow-200 text-yellow-800">
+                                        <input type="checkbox" checked={formData.isTop5} onChange={(e) => setFormData({...formData, isTop5: e.target.checked})} className="w-4 h-4 accent-yellow-500" />
+                                        <span className="text-sm font-bold">Destacar en Top 5</span>
+                                    </label>
                                 </div>
 
                                 <div className="grid grid-cols-2 gap-4">
@@ -658,8 +662,111 @@
                             </form>
                         )}
 
-                        {/* ... Resto de pestañas Admin (orders, settings) ... */}
-                        {/* Se mantiene la estructura pero con estilos claros */}
+                        {activeTab === 'orders' && (
+                            <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-6">
+                                <div className="flex gap-4 items-end bg-slate-50 p-4 rounded-lg">
+                                    <div className="flex-1">
+                                        <label className="text-xs text-slate-500 block mb-1">Ingresar ID de Orden para Procesar</label>
+                                        <input id="orderInput" type="number" placeholder="Ej: 123456" className="w-full bg-white border border-slate-200 rounded p-2 text-slate-900" />
+                                    </div>
+                                    <button onClick={() => onDeductStock(document.getElementById('orderInput').value)} className="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded font-bold">Procesar y Descontar</button>
+                                </div>
+                                <h3 className="font-bold text-slate-900">Pedidos Pendientes</h3>
+                                {pendingOrders.length === 0 ? <p className="text-slate-500">No hay pedidos pendientes.</p> : (
+                                    <div className="space-y-2">
+                                        {pendingOrders.map(o => (
+                                            <div key={o.id} className="p-3 bg-slate-50 rounded flex justify-between items-center border border-slate-200">
+                                                <div>
+                                                    <span className="font-mono font-bold text-cyan-600">#{o.id}</span>
+                                                    <span className="text-xs text-slate-500 ml-2">{new Date(o.date).toLocaleDateString()} | {o.buyer.name}</span>
+                                                    <div className="text-sm text-slate-700">{o.items.map(i=>`${i.name} (${i.size})`).join(', ')}</div>
+                                                </div>
+                                                <div className="text-right">
+                                                    <div className="font-bold text-slate-900">${o.finalTotal.toLocaleString()}</div>
+                                                    <button onClick={() => onDeductStock(o.id)} className="text-xs text-green-600 hover:underline">Procesar</button>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        )}
+                        
+                        {activeTab === 'stats' && (
+                             <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                                <h3 className="font-bold text-slate-900 mb-4 flex items-center gap-2"><Trophy className="text-yellow-500"/> Productos Más Vendidos</h3>
+                                <div className="space-y-2">
+                                    {[...products].sort((a,b) => (b.sales || 0) - (a.sales || 0)).map((p, i) => (
+                                        <div key={p.id} className="flex items-center justify-between p-3 bg-slate-50 rounded-lg border border-slate-200">
+                                            <div className="flex items-center gap-4">
+                                                <div className={`w-8 h-8 flex items-center justify-center rounded-full font-bold ${i===0?'bg-yellow-100 text-yellow-800':i===1?'bg-slate-200 text-slate-700':i===2?'bg-orange-100 text-orange-800':'bg-white border text-slate-500'}`}>
+                                                    {i+1}
+                                                </div>
+                                                <img src={p.images[0]} className="w-10 h-10 rounded object-contain bg-white border border-slate-200"/>
+                                                <div>
+                                                    <p className="font-bold text-slate-900">{p.name}</p>
+                                                    <p className="text-xs text-slate-500">{p.league} - {p.team}</p>
+                                                </div>
+                                            </div>
+                                            <div className="text-right">
+                                                <span className="block text-xl font-bold text-green-600">{p.sales || 0}</span>
+                                                <span className="text-[10px] text-slate-500 uppercase">Ventas Totales</span>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                             </div>
+                        )}
+
+                        {activeTab === 'settings' && (
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                                    <h3 className="font-bold text-slate-900 mb-4">Menú Lateral (Botones)</h3>
+                                    <div className="space-y-2 mb-4">
+                                        {contacts.map((c) => (
+                                            <div key={c.id} className="flex gap-2 items-center bg-slate-50 p-2 rounded border border-slate-200">
+                                                <span className="text-slate-700 text-sm flex-1">{c.label} ({c.type})</span>
+                                                <button onClick={() => handleDelete(c.id, 'contacts')} className="text-red-500"><Trash2 size={16}/></button>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <div className="space-y-2 border-t border-slate-200 pt-2">
+                                        <input placeholder="Texto Botón" className="w-full bg-slate-50 border border-slate-200 rounded p-2 text-slate-900 text-sm" value={newContact.label} onChange={e=>setNewContact({...newContact, label:e.target.value})} />
+                                        <input placeholder="URL Destino" className="w-full bg-slate-50 border border-slate-200 rounded p-2 text-slate-900 text-sm" value={newContact.url} onChange={e=>setNewContact({...newContact, url:e.target.value})} />
+                                        <select className="w-full bg-slate-50 border border-slate-200 rounded p-2 text-slate-900 text-sm" value={newContact.type} onChange={e=>setNewContact({...newContact, type:e.target.value})}>
+                                            <option value="link">Enlace General</option>
+                                            <option value="whatsapp">WhatsApp</option>
+                                            <option value="instagram">Instagram</option>
+                                            <option value="star">Estrella</option>
+                                            <option value="heart">Corazón</option>
+                                            <option value="globe">Mundo</option>
+                                            <option value="truck">Camión</option>
+                                            <option value="gift">Regalo</option>
+                                        </select>
+                                        <button onClick={handleAddContact} className="w-full bg-cyan-600 rounded p-2 text-white text-sm font-bold hover:bg-cyan-700">Agregar Botón</button>
+                                    </div>
+                                </div>
+                                <div className="space-y-6">
+                                    <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                                        <h3 className="font-bold text-slate-900 mb-4">Marquesina</h3>
+                                        <input className="w-full bg-slate-50 border border-slate-200 rounded p-2 text-slate-900" value={marqueeText} onChange={e=>setMarqueeText(e.target.value)} />
+                                        <label className="flex items-center gap-2 text-slate-700 mt-2"><input type="checkbox" checked={showMarquee} onChange={e=>setShowMarquee(e.target.checked)} /> Mostrar Cartel</label>
+                                    </div>
+                                    <div className="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                                        <h3 className="font-bold text-slate-900 mb-4">Cupones</h3>
+                                        <div className="flex gap-2">
+                                            <input id="newCouponCode" placeholder="Código" className="bg-slate-50 border border-slate-200 rounded p-2 text-slate-900 w-24" />
+                                            <input id="newCouponDisc" type="number" placeholder="%" className="bg-slate-50 border border-slate-200 rounded p-2 text-slate-900 w-16" />
+                                            <button onClick={() => {
+                                                const code = document.getElementById('newCouponCode').value.toUpperCase();
+                                                const disc = parseInt(document.getElementById('newCouponDisc').value);
+                                                if(code && disc) { setCoupons([...coupons, {code, discount: disc}]); document.getElementById('newCouponCode').value=''; }
+                                            }} className="bg-cyan-600 px-3 rounded text-white hover:bg-cyan-700"><Plus/></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             );
@@ -704,6 +811,13 @@
 
                             <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-start mt-4">
                                 <div className="w-full lg:w-1/2 aspect-square lg:aspect-[4/3] bg-white rounded-3xl overflow-hidden border border-white shadow-xl relative group">
+                                    {/* Etiquetas en imagen */}
+                                    <div className="absolute top-4 left-4 z-20 flex flex-col gap-2 items-start">
+                                        {Object.values(product.stock).every(s => s === 0) && <span className="bg-red-500 text-white text-xs px-3 py-1 rounded-full font-bold shadow-md">AGOTADO</span>}
+                                        {product.discountPercent > 0 && <span className="bg-green-500 text-white text-xs px-3 py-1 rounded-full font-bold shadow-md">{product.discountPercent}% OFF</span>}
+                                        {product.type === 'Retro' && <span className="bg-amber-400 text-white text-xs px-3 py-1 rounded-full font-bold shadow-md flex items-center gap-1"><History size={12}/> RETRO</span>}
+                                        {product.isTop5 && <span className="bg-yellow-400 text-white text-xs px-3 py-1 rounded-full font-bold shadow-md flex items-center gap-1"><Star size={12}/> MÁS VENDIDO</span>}
+                                    </div>
                                     <ImageSlider images={product.images} alt={product.name} />
                                 </div>
 
@@ -780,7 +894,11 @@
 
         const PopularView = ({ products, onBack, onSelectProduct }) => {
             const sortedProducts = useMemo(() => {
-                return [...products].sort((a,b) => (b.sales || 0) - (a.sales || 0)).slice(0, 5);
+                // Modificado para usar Top 5 Manual si está activado
+                const manualTop5 = products.filter(p => p.isTop5);
+                // Si hay productos marcados manualmente, usarlos, sino usar ventas
+                const list = manualTop5.length > 0 ? manualTop5 : [...products].sort((a,b) => (b.sales || 0) - (a.sales || 0));
+                return list.slice(0, 5);
             }, [products]);
 
             return (
@@ -800,7 +918,11 @@
                                     <div className="absolute -left-2 -top-2 w-8 h-8 flex items-center justify-center bg-slate-900 text-white font-black rounded-full border-2 border-white shadow-lg z-10">
                                         {index + 1}
                                     </div>
-                                    <div className="w-20 h-20 md:w-32 md:h-32 bg-slate-100 rounded-xl overflow-hidden flex-shrink-0">
+                                    <div className="w-20 h-20 md:w-32 md:h-32 bg-slate-100 rounded-xl overflow-hidden flex-shrink-0 relative">
+                                        {/* Etiquetas también en el ranking */}
+                                        <div className="absolute top-1 left-1 z-20 flex flex-col gap-1 items-start">
+                                            {p.isTop5 && <span className="bg-yellow-400 text-white text-[10px] px-2 py-0.5 rounded font-bold shadow-md flex items-center gap-1"><Star size={10}/> TOP</span>}
+                                        </div>
                                         <img src={p.images[0]} className="w-full h-full object-cover" />
                                     </div>
                                     <div className="flex-1 min-w-0">
@@ -1140,10 +1262,13 @@
                                                     <div className="relative">
                                                         <img src={p.images[0]} className="w-full h-64 object-cover" />
                                                         <div className="absolute top-2 left-2 flex flex-col gap-1 items-start">
+                                                            {/* Etiquetas limpias: sobre la imagen */}
                                                             {!hasStock && <span className="bg-red-500 text-white text-[10px] px-2 py-1 rounded font-bold shadow-sm">AGOTADO</span>}
                                                             {p.discountPercent > 0 && <span className="bg-green-500 text-white text-[10px] px-2 py-1 rounded font-bold shadow-sm">{p.discountPercent}% OFF</span>}
                                                             {p.type === 'Retro' && <span className="bg-amber-400 text-white text-[10px] px-2 py-1 rounded font-bold shadow-sm flex items-center gap-1"><History size={10}/> RETRO</span>}
                                                             {p.type === 'Actual' && <span className="bg-blue-500 text-white text-[10px] px-2 py-1 rounded font-bold shadow-sm flex items-center gap-1"><Zap size={10}/> ACTUAL</span>}
+                                                            {/* Etiqueta Más Vendido */}
+                                                            {p.isTop5 && <span className="bg-yellow-400 text-white text-[10px] px-2 py-1 rounded font-bold shadow-sm flex items-center gap-1"><Star size={10}/> MÁS VENDIDO</span>}
                                                         </div>
                                                     </div>
                                                     <div className="p-4">
