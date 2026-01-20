@@ -33,20 +33,20 @@
         /* UTILIDADES NEUMORFISMO */
         .neu-flat {
             background: #e0e5ec;
-            box-shadow: 5px 5px 10px rgb(163,177,198,0.5), -5px -5px 10px rgba(255,255,255, 0.5);
+            box-shadow: 9px 9px 16px rgb(163,177,198,0.6), -9px -9px 16px rgba(255,255,255, 0.5);
             border-radius: 20px;
             border: 1px solid rgba(255,255,255,0.2);
         }
 
         .neu-pressed {
             background: #e0e5ec;
-            box-shadow: inset 4px 4px 8px 0 rgba(163,177,198, 0.6), inset -4px -4px 8px 0 rgba(255,255,255, 0.8);
+            box-shadow: inset 6px 6px 10px 0 rgba(163,177,198, 0.7), inset -6px -6px 10px 0 rgba(255,255,255, 0.8);
             border-radius: 15px;
         }
 
         .neu-btn {
             background: #e0e5ec;
-            box-shadow: 5px 5px 10px 0 rgba(163,177,198, 0.6), -5px -5px 10px 0 rgba(255,255,255, 0.8);
+            box-shadow: 6px 6px 10px 0 rgba(163,177,198, 0.7), -6px -6px 10px 0 rgba(255,255,255, 0.8);
             border-radius: 50px;
             transition: all 0.2s ease;
             color: #4a5568;
@@ -55,19 +55,19 @@
         
         .neu-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 6px 6px 12px 0 rgba(163,177,198, 0.7), -6px -6px 12px 0 rgba(255,255,255, 0.8);
+            box-shadow: 8px 8px 12px 0 rgba(163,177,198, 0.7), -8px -8px 12px 0 rgba(255,255,255, 0.8);
             color: #0891b2;
         }
 
         .neu-btn:active {
             transform: translateY(1px);
-            box-shadow: inset 3px 3px 6px 0 rgba(163,177,198, 0.7), inset -3px -3px 6px 0 rgba(255,255,255, 0.8);
+            box-shadow: inset 4px 4px 8px 0 rgba(163,177,198, 0.7), inset -4px -4px 8px 0 rgba(255,255,255, 0.8);
         }
 
         .neu-btn-primary {
             background: #0891b2;
             color: white;
-            box-shadow: 5px 5px 10px 0 rgba(163,177,198, 0.6), -5px -5px 10px 0 rgba(255,255,255, 0.8);
+            box-shadow: 6px 6px 10px 0 rgba(163,177,198, 0.7), -6px -6px 10px 0 rgba(255,255,255, 0.8);
         }
         .neu-btn-primary:hover {
             background: #06b6d4;
@@ -76,7 +76,7 @@
 
         .neu-input {
             background: #e0e5ec;
-            box-shadow: inset 4px 4px 8px #a3b1c6, inset -4px -4px 8px #ffffff;
+            box-shadow: inset 5px 5px 10px #a3b1c6, inset -5px -5px 10px #ffffff;
             border: none;
             border-radius: 12px;
             padding: 12px 16px;
@@ -116,7 +116,7 @@
         window.firebase = { auth, db, signInAnonymously, onAuthStateChanged, collection, addDoc, setDoc, updateDoc, deleteDoc, onSnapshot, doc, getDocs, getDoc };
         
         // ID FIJO para asegurar persistencia
-        window.APP_ID = "ayp-store-production-v1"; 
+        window.APP_ID = "ayp-store-v7-empty"; 
     </script>
 </head>
 <body>
@@ -157,15 +157,9 @@
         const SIZES_ADULT = ["XS", "S", "M", "L", "XL", "XXL", "3XL"];
         const SIZES_KIDS = ["6", "8", "10", "12", "14"];
 
-        const INITIAL_PRODUCTS = [
-            { id: "1", name: "Argentina 3 Estrellas", price: 45000, discount: 0, league: "Mundial", type: "adult", images: ["https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/d8ea260a631c4f528b38af6d01048dfd_9366/Camiseta_Titular_Argentina_22_Campeon_Blanco_IB3593_21_model.jpg"], teamLogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/Escudo_de_la_Selecci%C3%B3n_Argentina_de_F%C3%BAtbol_2022.svg/1200px-Escudo_de_la_Selecci%C3%B3n_Argentina_de_F%C3%BAtbol_2022.svg.png", stock: { "S": 5, "M": 5, "L": 5 } },
-            { id: "4", name: "Real Madrid Titular", price: 50000, discount: 10, league: "La Liga", type: "adult", images: ["https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/f49fa5381f2146959556d3967d603a62_9366/Camiseta_Local_Real_Madrid_23-24_Blanco_HR3796_01_laydown.jpg"], teamLogo: "https://i.postimg.cc/RF3MQtfz/realmadrid.png", stock: { "S": 2, "M": 3, "L": 3 } },
-            { id: "5", name: "Manchester City", price: 48000, discount: 0, league: "Premier League", type: "adult", images: ["https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_2000,h_2000/global/770438/01/fnd/ARG/fmt/png/Camiseta-de-f%C3%BAtbol-local-Manchester-City-23/24-para-hombre"], teamLogo: "https://i.postimg.cc/DZW2dGGN/manchestercity.png", stock: { "S": 10, "M": 10 } },
-        ];
-
-        const INITIAL_COUPONS = [
-            { id: 'welcome', code: 'BIENVENIDA', discount: 10 }
-        ];
+        // BASE DE DATOS INICIAL VACÍA
+        const INITIAL_PRODUCTS = []; 
+        const INITIAL_COUPONS = [];
 
         // --- SERVICIO FIREBASE ---
         const DB = {
@@ -181,14 +175,14 @@
                         // Productos
                         const prodRef = collection(db, 'artifacts', APP_ID, 'public', 'data', 'products');
                         onSnapshot(prodRef, (snapshot) => {
-                            if(snapshot.empty) {
-                                INITIAL_PRODUCTS.forEach(p => setDoc(doc(prodRef, String(p.id)), p));
-                            } else {
+                            if(!snapshot.empty) {
                                 setProducts(snapshot.docs.map(d => {
                                     const data = d.data();
                                     if (!data.images && data.image) data.images = [data.image];
                                     return {id: d.id, ...data};
                                 }));
+                            } else {
+                                setProducts([]);
                             }
                         });
 
@@ -211,10 +205,10 @@
                         // Cupones
                         const couponsRef = collection(db, 'artifacts', APP_ID, 'public', 'data', 'coupons');
                         onSnapshot(couponsRef, (snapshot) => {
-                            if(snapshot.empty) {
-                                INITIAL_COUPONS.forEach(c => setDoc(doc(couponsRef, String(c.id)), c));
-                            } else {
+                            if(!snapshot.empty) {
                                 setCoupons(snapshot.docs.map(d => ({id: d.id, ...d.data()})));
+                            } else {
+                                setCoupons([]);
                             }
                         });
                     }
@@ -322,15 +316,12 @@
                     <div className="relative h-48 md:h-72 p-3 md:p-6 flex items-center justify-center bg-transparent">
                         <div className="absolute inset-0 bg-gradient-to-tr from-white/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                         
-                        {/* IMAGEN DEL PRODUCTO (Grayscale si no hay stock) */}
                         <img src={mainImage} alt={product.name} className={`w-full h-full object-contain drop-shadow-xl z-10 transition-transform duration-500 group-hover:scale-110 ${totalStock <= 0 ? 'grayscale opacity-60' : ''}`} />
                         
-                        {/* ETIQUETA DE LIGA */}
                         <span className="absolute top-2 right-2 md:top-4 md:right-4 bg-[#e0e5ec] text-slate-500 text-[8px] md:text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider shadow-[3px_3px_6px_#b8b9be,-3px_-3px_6px_#ffffff] z-20">
                             {product.league}
                         </span>
                         
-                        {/* LOGOS ESCUDO Y LIGA */}
                         <div className="absolute bottom-2 right-2 md:bottom-4 md:right-4 flex gap-1 md:gap-2 z-20">
                             {leagueLogo && (
                                 <div className="w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center neu-flat p-1 md:p-2">
@@ -344,14 +335,12 @@
                             )}
                         </div>
 
-                        {/* DESCUENTO */}
                         {hasDiscount && (
                             <div className="absolute top-2 left-2 md:top-4 md:left-4 bg-red-500 text-white text-[8px] md:text-[10px] font-bold px-2 py-1 rounded-full shadow-lg z-20 animate-pulse">
                                 {product.discount}% OFF
                             </div>
                         )}
 
-                        {/* SIN STOCK - Etiqueta Sutil */}
                         {totalStock <= 0 && (
                             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-slate-800 text-white text-xs font-bold px-3 py-1 rounded rotate-[-10deg] shadow-lg z-30 pointer-events-none whitespace-nowrap">
                                 SIN STOCK
@@ -398,19 +387,36 @@
             const leagueObj = leagues.find(l => l.name === product.league);
             const leagueLogo = leagueObj ? leagueObj.logo : null;
 
+            const handleShare = () => {
+                const url = `${window.location.origin}${window.location.pathname}?producto=${product.id}`;
+                if (navigator.share) {
+                    navigator.share({
+                        title: product.name,
+                        text: `Mira esta camiseta de ${product.name} en AyP Store`,
+                        url: url,
+                    }).catch(console.error);
+                } else {
+                    navigator.clipboard.writeText(url).then(() => alert("¡Enlace copiado al portapapeles!"));
+                }
+            };
+
             return (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-md animate-fade-in">
                     <div className="neu-flat w-full max-w-5xl overflow-hidden flex flex-col md:flex-row relative max-h-[90vh]">
-                        <button onClick={onClose} className="absolute top-4 right-4 neu-btn w-10 h-10 flex items-center justify-center z-30 text-slate-500">
-                            <Icon name="x" size={20} />
-                        </button>
+                        <div className="absolute top-4 right-4 z-30 flex gap-2">
+                            <button onClick={handleShare} className="neu-btn w-10 h-10 flex items-center justify-center text-cyan-600 bg-[#e0e5ec] hover:text-cyan-700" title="Copiar Link">
+                                <Icon name="share-2" size={20} />
+                            </button>
+                            <button onClick={onClose} className="neu-btn w-10 h-10 flex items-center justify-center text-slate-500 hover:text-red-500">
+                                <Icon name="x" size={20} />
+                            </button>
+                        </div>
                         
                         <div className="w-full md:w-1/2 p-6 flex flex-col items-center justify-center relative bg-[#e0e5ec]">
                             <div className="absolute w-64 h-64 rounded-full neu-pressed opacity-50 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"></div>
                             
                             <img src={images[imgIndex]} className="w-full max-h-[350px] object-contain drop-shadow-2xl relative z-10 transition-all duration-300" />
                             
-                            {/* Galería Simple */}
                             {images.length > 1 && (
                                 <div className="flex gap-2 mt-4 z-20 overflow-x-auto p-2 w-full justify-center">
                                     {images.map((img, i) => (
@@ -501,7 +507,6 @@
                             </button>
                         ))}
                     </div>
-                    {/* BOTONES DE CONTACTO EN SIDEBAR */}
                     <div className="p-6 border-t border-slate-200/50 space-y-3">
                         <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" className="w-full flex items-center justify-center gap-2 neu-btn p-3 text-green-600 font-bold hover:text-green-500 transition-colors">
                             <Icon name="message-circle" size={20} /> Contactar WhatsApp
@@ -520,7 +525,6 @@
             const [couponCode, setCouponCode] = useState("");
             const [discount, setDiscount] = useState(0);
 
-            // Calcular Total con Descuento del Cupón
             const finalTotal = total * (1 - discount / 100);
 
             const checkStock = (id, size, qty) => {
@@ -608,7 +612,6 @@
                                         </div>
                                     ) : (
                                         cart.map((item, idx) => {
-                                            // Calcular precio unitario con descuento individual del producto si tiene
                                             const itemPrice = item.discount && item.discount > 0 ? item.price * (1 - item.discount/100) : item.price;
                                             return (
                                                 <div key={`${item.id}-${item.size}`} className="neu-flat p-4 flex gap-4 items-center">
@@ -637,7 +640,6 @@
                                     )}
                                 </div>
                                 <div className="p-8 neu-pressed m-4 rounded-3xl">
-                                    {/* Sección Cupón */}
                                     <div className="mb-4 flex gap-2">
                                         <input 
                                             placeholder="Código Descuento" 
@@ -695,7 +697,6 @@
         };
 
         const AdminPanel = ({ isOpen, onClose, products, orders, leagues, coupons }) => {
-            // Hooks declarados SIEMPRE al principio
             const [form, setForm] = useState({ id: null, name: "", price: "", discount: 0, league: "Mundial", type: "adult", imagesStr: "", teamLogo: "" });
             const [stocks, setStocks] = useState({});
             const [leagueForm, setLeagueForm] = useState({ name: "", logo: "" });
@@ -703,7 +704,6 @@
             const [activeTab, setActiveTab] = useState('inventory'); 
             const [logoMode, setLogoMode] = useState('predefined'); 
 
-            // Inicializar stocks cuando cambia el tipo
             useEffect(() => {
                 const sizes = form.type === 'kid' ? SIZES_KIDS : SIZES_ADULT;
                 const newStocks = {};
@@ -711,14 +711,12 @@
                 setStocks(newStocks);
             }, [form.type]);
 
-            // EARLY RETURN DESPUÉS DE LOS HOOKS (FIX PRINCIPAL)
             if (!isOpen) return null;
 
-            // Handlers
             const handleEditProduct = (prod) => {
                 const imgs = prod.images && prod.images.length > 0 ? prod.images : (prod.image ? [prod.image] : []);
                 setForm({
-                    id: String(prod.id), // Aseguramos que sea string
+                    id: String(prod.id),
                     name: prod.name,
                     price: prod.price,
                     discount: prod.discount || 0,
@@ -738,8 +736,7 @@
 
             const handleSubmit = async (e) => {
                 e.preventDefault();
-                const prodId = form.id || String(Date.now()); // Aseguramos string
-                // Convertir string de imagenes a array
+                const prodId = form.id || String(Date.now());
                 const imagesArray = form.imagesStr.split(',').map(s => s.trim()).filter(s => s !== "");
                 
                 const newProduct = { 
@@ -749,10 +746,9 @@
                     discount: Number(form.discount),
                     stock: stocks,
                     images: imagesArray,
-                    // Compatibilidad con código viejo que busca 'image'
                     image: imagesArray.length > 0 ? imagesArray[0] : ""
                 };
-                delete newProduct.imagesStr; // No guardar el string temporal
+                delete newProduct.imagesStr;
 
                 await DB.addProduct(newProduct);
                 
@@ -789,7 +785,6 @@
                     const APP_ID = window.APP_ID;
                     let possible = true;
 
-                    // Verificar stock primero
                     for(let item of order.items) {
                         const prodRef = doc(db, 'artifacts', APP_ID, 'public', 'data', 'products', String(item.id));
                         const prodSnap = await getDoc(prodRef);
@@ -810,13 +805,11 @@
                         }
                     }
 
-                    // Si es posible, proceder a descontar
                     if(possible) {
                         for(let item of order.items) {
                             const prodRef = doc(db, 'artifacts', APP_ID, 'public', 'data', 'products', String(item.id));
                             const prodSnap = await getDoc(prodRef);
                             
-                            // Doble check por seguridad, aunque ya verificamos
                             if (prodSnap.exists()) {
                                 const prodData = prodSnap.data();
                                 const newStock = { ...prodData.stock };
@@ -836,7 +829,6 @@
             const sizesToRender = form.type === 'kid' ? SIZES_KIDS : SIZES_ADULT;
             const previewImages = form.imagesStr.split(',').map(s => s.trim()).filter(s => s !== "");
             
-            // Calculo de Precio Final Dinámico
             const calculatedPrice = form.price && form.discount 
                 ? Number(form.price) * (1 - Number(form.discount)/100) 
                 : Number(form.price);
@@ -891,7 +883,6 @@
                                                 <input type="number" placeholder="%" className="neu-input w-full" value={form.discount} onChange={e => setForm({...form, discount: e.target.value})} />
                                             </div>
                                         </div>
-                                        {/* Visualización del Precio Final Calculado */}
                                         {form.price && (
                                             <div className="text-right text-sm font-bold text-green-600">
                                                 Precio Final: ${calculatedPrice.toLocaleString()}
@@ -906,7 +897,6 @@
                                             <label className="text-xs font-bold text-slate-500 uppercase mb-1 block">Fotos (URLs separadas por coma)</label>
                                             <textarea required placeholder="https://foto1.jpg, https://foto2.jpg" className="neu-input w-full h-20 text-xs" value={form.imagesStr} onChange={e => setForm({...form, imagesStr: e.target.value})}></textarea>
                                             
-                                            {/* Preview de Imágenes */}
                                             {previewImages.length > 0 && (
                                                 <div className="flex gap-2 mt-2 overflow-x-auto pb-2">
                                                     {previewImages.map((img, i) => (
@@ -1093,11 +1083,49 @@
             const [isSidebarOpen, setIsSidebarOpen] = useState(false);
             const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
+            useEffect(() => {
+                const handleUrlParam = () => {
+                    const params = new URLSearchParams(window.location.search);
+                    const prodId = params.get('producto');
+                    if (prodId && products.length > 0) {
+                        const found = products.find(p => String(p.id) === prodId);
+                        if (found) setSelectedProduct(found);
+                    } else if (!prodId) {
+                        setSelectedProduct(null);
+                    }
+                };
+
+                if (products.length > 0) handleUrlParam();
+
+                window.addEventListener('popstate', handleUrlParam);
+                return () => window.removeEventListener('popstate', handleUrlParam);
+            }, [products]);
+
             const filteredProducts = products.filter(p => {
                 const matchCat = category === "Todas" || p.league === category;
                 const matchSearch = p.name.toLowerCase().includes(search.toLowerCase());
                 return matchCat && matchSearch;
             });
+
+            const handleSelectProduct = (product) => {
+                setSelectedProduct(product);
+                try {
+                    const newUrl = `?producto=${product.id}`;
+                    window.history.pushState({}, '', newUrl);
+                } catch(e) {
+                    console.log("URL update skipped in preview");
+                }
+            };
+
+            const handleCloseModal = () => {
+                setSelectedProduct(null);
+                try {
+                    const newUrl = window.location.pathname;
+                    window.history.pushState({}, '', newUrl);
+                } catch (e) {
+                    console.log("URL update skipped in preview");
+                }
+            };
 
             const addToCart = (product, size) => {
                 const existing = cart.find(i => i.id === product.id && i.size === size);
@@ -1162,8 +1190,8 @@
                         ) : (
                             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
                                 {filteredProducts.map(product => (
-                                    <div key={product.id} onClick={() => setSelectedProduct(product)} className="cursor-pointer">
-                                        <ProductCard product={product} onAdd={() => setSelectedProduct(product)} leagues={leagues} />
+                                    <div key={product.id} onClick={() => handleSelectProduct(product)} className="cursor-pointer">
+                                        <ProductCard product={product} onAdd={() => handleSelectProduct(product)} leagues={leagues} />
                                     </div>
                                 ))}
                             </div>
@@ -1173,7 +1201,7 @@
                     <footer className="text-center py-8 text-slate-400 text-sm font-bold"><p>AyP Importados © 2026</p></footer>
 
                     <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} onSelectCategory={setCategory} activeCategory={category} leagues={leagues} />
-                    <ProductModal product={selectedProduct} isOpen={!!selectedProduct} onClose={() => setSelectedProduct(null)} onAddToCart={addToCart} leagues={leagues} />
+                    <ProductModal product={selectedProduct} isOpen={!!selectedProduct} onClose={handleCloseModal} onAddToCart={addToCart} leagues={leagues} />
                     <CartSidebar isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} cart={cart} updateQty={updateQty} remove={removeFromCart} total={cartTotal} onCreateOrder={clearCart} products={products} coupons={coupons} />
                     <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} onLogin={handleLogin} />
                     <AdminPanel isOpen={isAdminOpen} onClose={() => setIsAdminOpen(false)} products={products} orders={orders} leagues={leagues} coupons={coupons} />
