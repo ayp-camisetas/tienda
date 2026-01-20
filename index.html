@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AyP Store - Live Database</title>
+    <title>AyP Importados</title>
     
     <!-- React & ReactDOM -->
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
@@ -340,12 +340,6 @@
                                 {product.discount}% OFF
                             </div>
                         )}
-
-                        {totalStock <= 0 && (
-                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-slate-800 text-white text-xs font-bold px-3 py-1 rounded rotate-[-10deg] shadow-lg z-30 pointer-events-none whitespace-nowrap">
-                                SIN STOCK
-                            </div>
-                        )}
                     </div>
 
                     <div className="p-3 md:p-5">
@@ -366,6 +360,11 @@
                                 <Icon name="shopping-cart" size={16} className="md:w-5 md:h-5" />
                             </button>
                         </div>
+                        {totalStock <= 0 && (
+                            <div className="mt-2 text-center text-red-500 text-xs font-black uppercase tracking-widest border-t border-red-200 pt-2">
+                                Sin Stock
+                            </div>
+                        )}
                     </div>
                 </div>
             );
@@ -897,6 +896,7 @@
                                             <label className="text-xs font-bold text-slate-500 uppercase mb-1 block">Fotos (URLs separadas por coma)</label>
                                             <textarea required placeholder="https://foto1.jpg, https://foto2.jpg" className="neu-input w-full h-20 text-xs" value={form.imagesStr} onChange={e => setForm({...form, imagesStr: e.target.value})}></textarea>
                                             
+                                            {/* Preview de Imágenes */}
                                             {previewImages.length > 0 && (
                                                 <div className="flex gap-2 mt-2 overflow-x-auto pb-2">
                                                     {previewImages.map((img, i) => (
@@ -1071,6 +1071,7 @@
             const [orders, setOrders] = useState([]);
             const [leagues, setLeagues] = useState([]);
             const [coupons, setCoupons] = useState([]);
+            const [showOnlyStock, setShowOnlyStock] = useState(false); // Estado para el filtro de stock
             
             useEffect(() => { DB.init(setProducts, setOrders, setLeagues, setCoupons); }, []);
 
@@ -1104,7 +1105,15 @@
             const filteredProducts = products.filter(p => {
                 const matchCat = category === "Todas" || p.league === category;
                 const matchSearch = p.name.toLowerCase().includes(search.toLowerCase());
-                return matchCat && matchSearch;
+                
+                // Filtro de Stock
+                let matchStock = true;
+                if (showOnlyStock) {
+                    const totalStock = p.stock ? Object.values(p.stock).reduce((a, b) => a + b, 0) : 0;
+                    matchStock = totalStock > 0;
+                }
+
+                return matchCat && matchSearch && matchStock;
             });
 
             const handleSelectProduct = (product) => {
@@ -1154,7 +1163,7 @@
                     <nav className="sticky top-0 z-40 bg-slate-900 border-b border-slate-800 shadow-2xl py-3 px-4 md:px-8 flex items-center justify-between">
                         <div className="flex items-center gap-4">
                             <button onClick={() => setIsSidebarOpen(true)} className="p-2 bg-slate-800 hover:bg-slate-700 rounded-xl text-cyan-500 transition-colors"><Icon name="menu" size={24} /></button>
-                            <img src="https://i.postimg.cc/9fx1vwqg/Logo-Ay-P.png" alt="AyP Store" className="h-10 md:h-12 w-auto object-contain drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]" />
+                            <img src="https://i.postimg.cc/9fx1vwqg/Logo-Ay-P.png" alt="AyP Importados" className="h-10 md:h-12 w-auto object-contain drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]" />
                         </div>
                         <div className="hidden md:flex flex-1 max-w-lg mx-8 relative">
                             <Icon name="search" className="absolute left-4 top-3 text-slate-500" size={18} />
@@ -1174,18 +1183,30 @@
                             <Icon name="search" className="absolute left-4 top-3.5 text-slate-500" size={18} />
                             <input type="text" placeholder="Buscar..." className="neu-input w-full pl-11" value={search} onChange={e => setSearch(e.target.value)} />
                         </div>
-                        <div className="flex gap-4 overflow-x-auto pb-6 hide-scrollbar px-2">
+                        
+                        <div className="flex gap-4 overflow-x-auto pb-6 hide-scrollbar px-2 items-center">
+                            {/* Toggle Stock Filter */}
+                            <button 
+                                onClick={() => setShowOnlyStock(!showOnlyStock)}
+                                className={`flex items-center gap-2 whitespace-nowrap px-5 py-3 rounded-2xl text-sm font-bold transition-all border-2 ${showOnlyStock ? 'bg-green-100 text-green-700 border-green-300' : 'neu-btn text-slate-500 border-transparent'}`}
+                            >
+                                <Icon name="box" size={16} /> Solo En Stock
+                            </button>
+
+                            <div className="h-8 w-px bg-slate-300 mx-2"></div>
+
                             {leagues.map(l => (
                                 <button key={l.id} onClick={() => setCategory(l.name)} className={`flex items-center gap-2 whitespace-nowrap px-5 py-3 rounded-2xl text-sm font-bold transition-all ${category === l.name ? 'neu-pressed text-cyan-600 border border-white/50' : 'neu-btn text-slate-500'}`}>
                                     {l.name !== 'Todas' && <img src={l.logo} className="w-5 h-5 object-contain" />} {l.name}
                                 </button>
                             ))}
                         </div>
+
                         {filteredProducts.length === 0 ? (
                             <div className="text-center py-20 flex flex-col items-center">
                                 <div className="w-24 h-24 neu-pressed rounded-full flex items-center justify-center mb-6 text-slate-300"><Icon name="search-x" size={40}/></div>
                                 <p className="text-xl text-slate-500 font-bold">No hay camisetas aquí.</p>
-                                <button onClick={() => {setCategory("Todas"); setSearch("");}} className="mt-6 text-cyan-600 font-bold hover:underline">Ver todo</button>
+                                <button onClick={() => {setCategory("Todas"); setSearch(""); setShowOnlyStock(false);}} className="mt-6 text-cyan-600 font-bold hover:underline">Ver todo</button>
                             </div>
                         ) : (
                             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
