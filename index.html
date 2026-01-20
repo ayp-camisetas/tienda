@@ -33,20 +33,20 @@
         /* UTILIDADES NEUMORFISMO */
         .neu-flat {
             background: #e0e5ec;
-            box-shadow: 9px 9px 16px rgb(163,177,198,0.6), -9px -9px 16px rgba(255,255,255, 0.5);
+            box-shadow: 5px 5px 10px rgb(163,177,198,0.5), -5px -5px 10px rgba(255,255,255, 0.5);
             border-radius: 20px;
             border: 1px solid rgba(255,255,255,0.2);
         }
 
         .neu-pressed {
             background: #e0e5ec;
-            box-shadow: inset 6px 6px 10px 0 rgba(163,177,198, 0.7), inset -6px -6px 10px 0 rgba(255,255,255, 0.8);
+            box-shadow: inset 4px 4px 8px 0 rgba(163,177,198, 0.6), inset -4px -4px 8px 0 rgba(255,255,255, 0.8);
             border-radius: 15px;
         }
 
         .neu-btn {
             background: #e0e5ec;
-            box-shadow: 6px 6px 10px 0 rgba(163,177,198, 0.7), -6px -6px 10px 0 rgba(255,255,255, 0.8);
+            box-shadow: 5px 5px 10px 0 rgba(163,177,198, 0.6), -5px -5px 10px 0 rgba(255,255,255, 0.8);
             border-radius: 50px;
             transition: all 0.2s ease;
             color: #4a5568;
@@ -55,19 +55,19 @@
         
         .neu-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 8px 8px 12px 0 rgba(163,177,198, 0.7), -8px -8px 12px 0 rgba(255,255,255, 0.8);
+            box-shadow: 6px 6px 12px 0 rgba(163,177,198, 0.7), -6px -6px 12px 0 rgba(255,255,255, 0.8);
             color: #0891b2;
         }
 
         .neu-btn:active {
             transform: translateY(1px);
-            box-shadow: inset 4px 4px 8px 0 rgba(163,177,198, 0.7), inset -4px -4px 8px 0 rgba(255,255,255, 0.8);
+            box-shadow: inset 3px 3px 6px 0 rgba(163,177,198, 0.7), inset -3px -3px 6px 0 rgba(255,255,255, 0.8);
         }
 
         .neu-btn-primary {
             background: #0891b2;
             color: white;
-            box-shadow: 6px 6px 10px 0 rgba(163,177,198, 0.7), -6px -6px 10px 0 rgba(255,255,255, 0.8);
+            box-shadow: 5px 5px 10px 0 rgba(163,177,198, 0.6), -5px -5px 10px 0 rgba(255,255,255, 0.8);
         }
         .neu-btn-primary:hover {
             background: #06b6d4;
@@ -76,7 +76,7 @@
 
         .neu-input {
             background: #e0e5ec;
-            box-shadow: inset 5px 5px 10px #a3b1c6, inset -5px -5px 10px #ffffff;
+            box-shadow: inset 4px 4px 8px #a3b1c6, inset -4px -4px 8px #ffffff;
             border: none;
             border-radius: 12px;
             padding: 12px 16px;
@@ -314,65 +314,67 @@
             const hasDiscount = product.discount && product.discount > 0;
             const finalPrice = hasDiscount ? product.price * (1 - product.discount / 100) : product.price;
             
-            // Buscar logo de la liga
             const leagueObj = leagues.find(l => l.name === product.league);
             const leagueLogo = leagueObj ? leagueObj.logo : null;
 
             return (
                 <div className="neu-flat overflow-hidden group relative transition-all duration-300 hover:-translate-y-2">
-                    <div className="relative h-72 p-6 flex items-center justify-center bg-transparent">
+                    <div className="relative h-48 md:h-72 p-3 md:p-6 flex items-center justify-center bg-transparent">
                         <div className="absolute inset-0 bg-gradient-to-tr from-white/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                         
-                        <img src={mainImage} alt={product.name} className="w-full h-full object-contain drop-shadow-xl z-10 transition-transform duration-500 group-hover:scale-110" />
+                        {/* IMAGEN DEL PRODUCTO (Grayscale si no hay stock) */}
+                        <img src={mainImage} alt={product.name} className={`w-full h-full object-contain drop-shadow-xl z-10 transition-transform duration-500 group-hover:scale-110 ${totalStock <= 0 ? 'grayscale opacity-60' : ''}`} />
                         
-                        {/* Z-INDEX 20 para estar sobre la imagen */}
-                        <span className="absolute top-4 right-4 bg-[#e0e5ec] text-slate-500 text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow-[3px_3px_6px_#b8b9be,-3px_-3px_6px_#ffffff] z-20">
+                        {/* ETIQUETA DE LIGA */}
+                        <span className="absolute top-2 right-2 md:top-4 md:right-4 bg-[#e0e5ec] text-slate-500 text-[8px] md:text-[10px] font-bold px-2 py-1 rounded-full uppercase tracking-wider shadow-[3px_3px_6px_#b8b9be,-3px_-3px_6px_#ffffff] z-20">
                             {product.league}
                         </span>
                         
-                        {/* CONTENEDOR DE LOGOS (EQUIPO + LIGA) */}
-                        <div className="absolute bottom-4 right-4 flex gap-2 z-20">
+                        {/* LOGOS ESCUDO Y LIGA */}
+                        <div className="absolute bottom-2 right-2 md:bottom-4 md:right-4 flex gap-1 md:gap-2 z-20">
                             {leagueLogo && (
-                                <div className="w-10 h-10 rounded-full flex items-center justify-center neu-flat p-2">
+                                <div className="w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center neu-flat p-1 md:p-2">
                                     <img src={leagueLogo} className="w-full h-full object-contain" alt="Liga" />
                                 </div>
                             )}
                             {product.teamLogo && (
-                                <div className="w-14 h-14 rounded-full flex items-center justify-center neu-flat p-2">
+                                <div className="w-10 h-10 md:w-14 md:h-14 rounded-full flex items-center justify-center neu-flat p-1 md:p-2">
                                     <img src={product.teamLogo} className="w-full h-full object-contain" alt="Escudo" />
                                 </div>
                             )}
                         </div>
 
+                        {/* DESCUENTO */}
                         {hasDiscount && (
-                            <div className="absolute top-4 left-4 bg-red-500 text-white text-[10px] font-bold px-3 py-1 rounded-full shadow-lg z-20 animate-pulse">
+                            <div className="absolute top-2 left-2 md:top-4 md:left-4 bg-red-500 text-white text-[8px] md:text-[10px] font-bold px-2 py-1 rounded-full shadow-lg z-20 animate-pulse">
                                 {product.discount}% OFF
                             </div>
                         )}
 
+                        {/* SIN STOCK - Etiqueta Sutil */}
                         {totalStock <= 0 && (
-                            <div className="absolute inset-0 bg-[#e0e5ec]/60 flex items-center justify-center backdrop-blur-[2px] z-30">
-                                <span className="bg-red-500 text-white font-bold px-4 py-2 rounded-lg rotate-[-10deg] shadow-lg">AGOTADO</span>
+                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-slate-800 text-white text-xs font-bold px-3 py-1 rounded rotate-[-10deg] shadow-lg z-30 pointer-events-none whitespace-nowrap">
+                                SIN STOCK
                             </div>
                         )}
                     </div>
 
-                    <div className="p-5">
-                        <h3 className="font-extrabold text-lg text-slate-700 truncate mb-1">{product.name}</h3>
-                        <div className="flex justify-between items-end mt-4">
+                    <div className="p-3 md:p-5">
+                        <h3 className="font-extrabold text-sm md:text-lg text-slate-700 truncate mb-1">{product.name}</h3>
+                        <div className="flex justify-between items-end mt-2 md:mt-4">
                             <div className="flex flex-col">
-                                <span className="text-xs text-slate-400 font-bold uppercase mb-1">Precio</span>
+                                <span className="text-[10px] md:text-xs text-slate-400 font-bold uppercase mb-0.5 md:mb-1">Precio</span>
                                 <div className="flex flex-col">
-                                    {hasDiscount && <span className="text-xs text-red-400 line-through decoration-red-400">${product.price.toLocaleString()}</span>}
-                                    <span className={`text-2xl font-black ${hasDiscount ? 'text-red-500' : 'text-slate-800'}`}>${finalPrice.toLocaleString()}</span>
+                                    {hasDiscount && <span className="text-[10px] md:text-xs text-red-400 line-through decoration-red-400">${product.price.toLocaleString()}</span>}
+                                    <span className={`text-lg md:text-2xl font-black ${hasDiscount ? 'text-red-500' : 'text-slate-800'}`}>${finalPrice.toLocaleString()}</span>
                                 </div>
                             </div>
                             <button 
                                 onClick={(e) => { e.stopPropagation(); onAdd(product); }}
                                 disabled={totalStock <= 0}
-                                className={`w-12 h-12 rounded-full flex items-center justify-center transition-all ${totalStock > 0 ? 'neu-btn text-cyan-600 hover:text-cyan-500' : 'neu-pressed text-slate-300 cursor-not-allowed'}`}
+                                className={`w-8 h-8 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all ${totalStock > 0 ? 'neu-btn text-cyan-600 hover:text-cyan-500' : 'neu-pressed text-slate-300 cursor-not-allowed'}`}
                             >
-                                <Icon name="shopping-cart" size={20} />
+                                <Icon name="shopping-cart" size={16} className="md:w-5 md:h-5" />
                             </button>
                         </div>
                     </div>
@@ -498,6 +500,15 @@
                                 <span>{league.name}</span>
                             </button>
                         ))}
+                    </div>
+                    {/* BOTONES DE CONTACTO EN SIDEBAR */}
+                    <div className="p-6 border-t border-slate-200/50 space-y-3">
+                        <a href={`https://wa.me/${WHATSAPP_NUMBER}`} target="_blank" className="w-full flex items-center justify-center gap-2 neu-btn p-3 text-green-600 font-bold hover:text-green-500 transition-colors">
+                            <Icon name="message-circle" size={20} /> Contactar WhatsApp
+                        </a>
+                        <a href="https://www.instagram.com/ayp_importados/?hl=es" target="_blank" className="w-full flex items-center justify-center gap-2 neu-btn p-3 text-pink-600 font-bold hover:text-pink-500 transition-colors">
+                            <Icon name="instagram" size={20} /> Seguir en Instagram
+                        </a>
                     </div>
                 </div>
             </>
@@ -1149,7 +1160,7 @@
                                 <button onClick={() => {setCategory("Todas"); setSearch("");}} className="mt-6 text-cyan-600 font-bold hover:underline">Ver todo</button>
                             </div>
                         ) : (
-                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-8">
                                 {filteredProducts.map(product => (
                                     <div key={product.id} onClick={() => setSelectedProduct(product)} className="cursor-pointer">
                                         <ProductCard product={product} onAdd={() => setSelectedProduct(product)} leagues={leagues} />
